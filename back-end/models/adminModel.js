@@ -13,7 +13,6 @@ const adminSchema = mongoose.Schema({
   },
 });
 
-
 adminSchema.statics.loginCheck = async function (Email, Password) {
   const admin = await this.findOne({ Email });
 
@@ -22,12 +21,10 @@ adminSchema.statics.loginCheck = async function (Email, Password) {
 
     if (result) {
       return admin;
-    } else {
-      throw Error("incorrect password");
     }
-  } else {
-    throw Error("admin not exist");
   }
+  // Either the provided email is not associated with an admin or the password is incorrect
+  return null;
 };
 
 export default mongoose.model("admin", adminSchema);

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 export const Login = () => {
   const [adminData, setAdminData] = useState(null);
+  const [loginError, setLoginErr] = useState("");
 
   const onclickSubmit = (data) => {
     setAdminData(data);
@@ -32,7 +33,9 @@ export const Login = () => {
 
   return (
     <>
-      {adminData && <LoginPost adminData={adminData} />}
+      {adminData && (
+        <LoginPost adminData={adminData} setLoginErr={setLoginErr} />
+      )}
 
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden mx-4">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
@@ -42,6 +45,9 @@ export const Login = () => {
 
           <form className="mt-6" onSubmit={handleSubmit(onclickSubmit)}>
             <div className="mb-2">
+              {loginError && (
+                <p className="text-red-600 text-center">{loginError}</p>
+              )}
               <label
                 htmlFor="email"
                 className="block text-sm font-semibold text-gray-800"
@@ -83,7 +89,7 @@ export const Login = () => {
               />
             </div>
             <div className="mt-4 font-medium text-slate-400 text-center">
-              <Link className="hover:text-sm" to={"/"}>
+              <Link className="hover:text-sm" to={"/forgotPass"}>
                 forgot password?
               </Link>
             </div>
