@@ -27,6 +27,7 @@ export const LoginPost = ({ adminData, setLoginErr }) => {
     () => loginApi(adminData),
     {
       enabled: !!adminData,
+      retry:false
     }
   );
 
