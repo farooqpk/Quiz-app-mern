@@ -15,11 +15,15 @@ const loginApi = async (adminData) => {
     document.cookie = `jwt=${response.data.jwt}; max-age=43200; path=/`;
     return response.data;
   } catch (error) {
-    throw Error(error.response.data.message);
+    if(error.response){
+      throw new Error(error.response.data.message);
+    }else{
+      throw new Error('Check your internet connection,or please try again later')
+    }
   }
 };
 
-export const LoginPost = ({ adminData, setLoginErr }) => {
+export const LoginPost = ({ adminData, handleLoginErr }) => {
   const navigate = useNavigate();
 
   const { isError, isLoading, data, error } = useQuery(
@@ -36,7 +40,7 @@ export const LoginPost = ({ adminData, setLoginErr }) => {
   }
 
   if (isError) {
-    setLoginErr(error.message);
+    handleLoginErr(error.message);
   }
 
   data && navigate("/adminHome");

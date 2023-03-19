@@ -18,8 +18,8 @@ adminSchema.statics.loginCheck = async function (Email, Password) {
 
   if (admin) {
     const result = await bcrypt.compare(Password, admin.Password);
-
-    if (result) {
+   
+    if (result === true) {
       return admin;
     }
   }

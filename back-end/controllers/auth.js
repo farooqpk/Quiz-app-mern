@@ -9,13 +9,14 @@ export const loginPost = async (req, res) => {
       return res
         .status(401)
         .json({ success: false, message: "Invalid email or password" });
+    } else {
+      const token = createToken(admin._id);
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        maxAge: 12 * 60 * 60 * 1000,
+      });
+      res.status(201).json(true);
     }
-    const token = createToken(admin._id);
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      maxAge: 12 * 60 * 60 * 1000,
-    });
-    res.status(201).json(true);
   } catch (error) {
     res
       .status(500)

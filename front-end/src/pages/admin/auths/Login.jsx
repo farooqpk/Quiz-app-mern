@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoginPost } from "../../helpers/LoginPost";
+import { LoginPost } from "../../../helpers/LoginPost";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -11,6 +11,10 @@ export const Login = () => {
 
   const onclickSubmit = (data) => {
     setAdminData(data);
+  };
+
+  const handleLoginErr = (msg) => {
+    setLoginErr(msg);
   };
 
   const schema = yup.object().shape({
@@ -34,7 +38,7 @@ export const Login = () => {
   return (
     <>
       {adminData && (
-        <LoginPost adminData={adminData} setLoginErr={setLoginErr} />
+        <LoginPost adminData={adminData} handleLoginErr={handleLoginErr} />
       )}
 
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden mx-4">

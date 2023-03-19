@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../components/Loader";
+import {useNavigate} from 'react-router-dom'
 
 const forgotApi = async (Email) => {
   try {
@@ -12,12 +13,20 @@ const forgotApi = async (Email) => {
 
     return response.data;
   } catch (error) {
-    throw Error(error.response.data.message);
+    
+    if(error.response){
+      throw new Error(error.response.data.message);
+    }else{
+      throw new Error('Check your internet connection,or please try again later')
+    }
   }
 };
 
-export const ForgotPost = ({ Email, setForgotErr }) => {
-  const { data, error, isError, isLoading ,} = useQuery(
+export const ForgotPost = ({ Email, handleForgotErr }) => {
+
+  const navigate = useNavigate();
+
+  const { data, error, isError, isLoading } = useQuery(
     "forgotPass",
     () => forgotApi(Email),
     {
@@ -28,12 +37,15 @@ export const ForgotPost = ({ Email, setForgotErr }) => {
   );
 
   if (isError) {
-    setForgotErr(error.message);
+    handleForgotErr(error.message);
   }
 
   if (isLoading) {
     return <Loader />;
   }
 
+
+  data&& navigate('/otpForm')
+ 
   return null;
 };

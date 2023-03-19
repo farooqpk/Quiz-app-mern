@@ -1,17 +1,21 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useMemo, useState } from "react";
-import { ForgotPost } from "../../helpers/ForgotPost";
+import { useState } from "react";
+import { ForgotPost } from "../../../helpers/ForgotPost";
+
 
 const schema = yup.object().shape({
   Email: yup.string().required("email is required").email("enter valid email"),
 });
 
 export const ForgotPass = () => {
-  
   const [EmailForForgot, setEmailForForgot] = useState("");
   const [forgotErr, setForgotErr] = useState("");
+
+  const handleForgotErr = (msg) => {
+    setForgotErr(msg);
+  };
 
   const onclickSumbit = (data) => {
     setEmailForForgot(data.Email);
@@ -22,16 +26,15 @@ export const ForgotPass = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-
   return (
     <>
       {EmailForForgot && (
-        <ForgotPost Email={EmailForForgot} setForgotErr={setForgotErr} />
+        <ForgotPost Email={EmailForForgot} handleForgotErr={handleForgotErr} />
       )}
-       
+
       <section className="flex justify-center h-screen items-center max-w-full flex-wrap">
         <div className="bg-white rounded-lg w-full p-3 mx-4 lg:max-w-xl">
-          <h1 className="text-2xl font-semibold text-center text-black mt-4">
+          <h1 className="text-xl font-semibold text-center text-black mt-4">
             Enter Your Email To Send Otp
           </h1>
 

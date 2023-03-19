@@ -2,12 +2,14 @@ import adminModel from "../models/adminModel.js";
 import otpGenerator from "otp-generator";
 import otpModel from "../models/otpModel.js";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 
 export const forgotPass = async (req, res) => {
   try {
     const admin = await adminModel.findOne({ Email: req.body.Email });
-
     if (admin) {
+      res.status(200).json({ success: true });
+
       const randomOtp = otpGenerator.generate(5, {
         digits: true,
         lowerCaseAlphabets: false,
@@ -15,10 +17,33 @@ export const forgotPass = async (req, res) => {
         upperCaseAlphabets: false,
       });
 
-      const hashOtp = await bcrypt.hash(randomOtp, 10);
-      const Otp = await otpModel.create({ otp: hashOtp });
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASS,
+        },
+      });
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: admin.Email,
+        subject: "Hi from quiz app",
+        text: "your otp is:" + randomOtp,
+      };
 
-      console.log(Otp);
+      transporter.sendMail(mailOptions, async function (error, info) {
+        if (error) {
+          res
+            .status(401)
+            .json({ success: false, message: "Sorry,there is an error!" });
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+          const hashOtp = await bcrypt.hash(randomOtp, 10);
+          const Otp = await otpModel.create({ otp: hashOtp });
+          console.log(Otp);
+        }
+      });
     } else {
       res
         .status(401)
