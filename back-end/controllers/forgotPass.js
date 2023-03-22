@@ -6,8 +6,10 @@ import nodemailer from "nodemailer";
 
 export const forgotPass = async (req, res) => {
   try {
-    const admin = await adminModel.findOne({ Email: req.body.Email });
+    console.log(req.body.Email);
+    const admin = await adminModel.findOne({ email: req.body.Email });
     if (admin) {
+      
       res.status(200).json({ success: true });
 
       const randomOtp = otpGenerator.generate(5, {
@@ -26,7 +28,7 @@ export const forgotPass = async (req, res) => {
       });
       const mailOptions = {
         from: process.env.EMAIL,
-        to: admin.Email,
+        to: admin.email,
         subject: "Hi from quiz app",
         text: "your otp is:" + randomOtp,
       };
@@ -40,8 +42,10 @@ export const forgotPass = async (req, res) => {
         } else {
           console.log("Email sent: " + info.response);
           const hashOtp = await bcrypt.hash(randomOtp, 10);
-          const Otp = await otpModel.create({ otp: hashOtp });
-          console.log(Otp);
+          const Otp = await otpModel.create({
+            otp: hashOtp,
+            email: admin.email,
+          });
         }
       });
     } else {

@@ -1,28 +1,47 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import { OtpPost } from "../../../helpers/authHelpers/OtpPost";
+import { useLocation } from "react-router-dom";
 
 const schema = yup.object().shape({
-  otp: yup.string().required("required").length(5)
+  otp: yup.string().required("required").length(5),
 });
 
 export const OtpForm = () => {
+
+  const location = useLocation();
+
+  const [otpData, setOtpData] = useState(Number);
+  const [otpErr, setOtpErr] = useState("");
+  
   const onclickSumbit = (data) => {
-    console.log(data);
+    setOtpData(data.otp);
   };
+
+  const handleOtpErr = (msg) => {
+    setOtpErr(msg);
+    setOtpData(null)
+  };
+
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
   return (
     <>
+      {otpData && <OtpPost otpData={otpData} handleOtpErr={handleOtpErr} Email={location.state} />}
+
       <section className="flex justify-center h-screen items-center max-w-full flex-wrap">
         <div className="bg-white rounded-lg w-full p-3 mx-4 lg:max-w-xl">
           <form className="mt-8 mx-2" onSubmit={handleSubmit(onclickSumbit)}>
             <div className="flex flex-col items-center">
+              {otpErr && <p className="text-red-600 text-center">{otpErr}</p>}
               <input
                 type="text"
                 placeholder="Enter OTP here!"

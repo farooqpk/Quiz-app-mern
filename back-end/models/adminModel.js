@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const adminSchema = mongoose.Schema({
-  Email: {
+  email: {
     type: String,
     required: true,
     lowercase: true,
   },
-  Password: {
+  password: {
     type: String,
     required: true,
+    minlength: 5,
   },
 });
 
 adminSchema.statics.loginCheck = async function (Email, Password) {
-  const admin = await this.findOne({ Email });
-
+  const admin = await this.findOne({ email: Email });
+  console.log(Password);
   if (admin) {
-    const result = await bcrypt.compare(Password, admin.Password);
-   
+    const result = await bcrypt.compare(Password, admin.password);
     if (result === true) {
       return admin;
     }

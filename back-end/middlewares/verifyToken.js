@@ -1,20 +1,57 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
+export const verifyToken = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, process.env.SECRET, (err, tokenDecoded) => {
+      if (err) {
+        console.log(err);
+        res.status(403).json({
+          success: false,
+          message: "there is an issue,please try again!",
+        });
+        return false;
+      } else {
+        next();
+      }
+    });
+  } else {
+    res.status(403).json({
+      success: false,
+      message: "there is an issue with your authentication!",
+    });
+    return false;
+  }
+};
 
-export const verifyToken = (req,res,next)=>{
+export const verifyResetPassToken = (req, res, next) => {
+  const cookies = req.headers.cookie.split(";");
 
-    const token=req.cookies.jwt
-    if (token){
-        jwt.verify(token,process.env.SECRET,(err,tokenDecoded)=>{
-            if(err){
-                console.log(err);
-                return false
-            }else{
-                next()
-            }
-        })
-    }else{
-        return false
+  let resetToken;
+  cookies.forEach((cookie) => {
+    if (cookie.includes("ResetToken")) {
+      resetToken = cookie.split("=")[1];
     }
+  });
 
-}
+  if (resetToken) {
+    jwt.verify(resetToken, process.env.SECRET, (err, tokenDecoded) => {
+      if (err) {
+        console.log(err);
+        res.status(403).json({
+          success: false,
+          message: "there is an issue,please try again!",
+        });
+        return false;
+      } else {
+        next();
+      }
+    });
+  } else {
+    res.status(403).json({
+      success: false,
+      message: "there is an issue with your authentication!",
+    });
+    return false;
+  }
+};

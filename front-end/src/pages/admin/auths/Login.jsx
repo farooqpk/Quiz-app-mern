@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoginPost } from "../../../helpers/LoginPost";
+import {LoginPost} from '../../../helpers/authHelpers/LoginPost'
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -15,6 +16,7 @@ export const Login = () => {
 
   const handleLoginErr = (msg) => {
     setLoginErr(msg);
+    setAdminData(null)
   };
 
   const schema = yup.object().shape({

@@ -14,6 +14,7 @@ export const loginPost = async (req, res) => {
       res.cookie("jwt", token, {
         httpOnly: true,
         maxAge: 12 * 60 * 60 * 1000,
+        path: '/'
       });
       res.status(201).json(true);
     }

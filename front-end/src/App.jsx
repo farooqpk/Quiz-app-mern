@@ -5,6 +5,7 @@ import {QueryClient,QueryClientProvider} from 'react-query'
 import { AdminHome } from "./pages/admin/home/AdminHome"
 import { ForgotPass } from "./pages/admin/auths/ForgotPass"
 import { OtpForm } from "./pages/admin/auths/OtpForm"
+import { ResetPass } from "./pages/admin/auths/ResetPass"
 
 const queryClient = new QueryClient()
 
@@ -20,6 +21,7 @@ function App() {
     <Route path="/adminHome" element={<AdminHome/>} />
     <Route path="/forgotPass" element={<ForgotPass/>} />
     <Route path="/otpForm" element={<OtpForm/>} />
+    <Route path="/resetPass" element={<ResetPass/>} />
   </Routes>
   </BrowserRouter>
   </QueryClientProvider>

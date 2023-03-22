@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Loader from "../components/Loader";
+import Loader from "../../components/Loader";
 
-const loginApi = async (adminData) => {
+const loginApiReq = async (adminData) => {
   try {
     const { Email, Password } = adminData;
 
@@ -12,7 +12,7 @@ const loginApi = async (adminData) => {
       { Email, Password },
       { headers: { "Content-Type": "application/json" }, withCredentials: true }
     );
-    document.cookie = `jwt=${response.data.jwt}; max-age=43200; path=/`;
+    
     return response.data;
   } catch (error) {
     if(error.response){
@@ -28,7 +28,7 @@ export const LoginPost = ({ adminData, handleLoginErr }) => {
 
   const { isError, isLoading, data, error } = useQuery(
     "login",
-    () => loginApi(adminData),
+    () => loginApiReq(adminData),
     {
       enabled: !!adminData,
       retry:false
