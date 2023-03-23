@@ -3,15 +3,12 @@ import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
 
-
-const forgotApiReq = async (Email) => {
+const verifyTokenApiReq = async () => {
   try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_SERVER_BASEURL}/forgotPass`,
-      { Email },
-      { headers: { "Content-Type": "application/json" } }
+    const response = await axios.get(
+      `${import.meta.env.VITE_SERVER_BASEURL}/verifyToken`,
+      { headers: { "Content-Type": "application/json" }, withCredentials: true }
     );
-
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -24,30 +21,23 @@ const forgotApiReq = async (Email) => {
   }
 };
 
-export const ForgotPost = ({ Email, handleForgotErr }) => {
+export const VerifyToken = ({ children }) => {
   const navigate = useNavigate();
-
   const { data, error, isError, isLoading } = useQuery(
-    "forgotPass",
-    () => forgotApiReq(Email),
+    "verifytoken",
+    () => verifyTokenApiReq(),
     {
-      enabled: !!Email,
-      //its used to avoid multiple request
       retry: false,
     }
   );
 
-  if (isError) {
-    handleForgotErr(error.message);
-  }
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
   if (data) {
-    navigate("/otpForm", { state: Email && Email });
+    return children;
   }
-
-  return null;
+  if (isLoading) {
+    <Loader />;
+  }
+  if (isError) {
+    navigate("/login");
+  }
 };

@@ -8,7 +8,7 @@ const loginApiReq = async (adminData) => {
     const { Email, Password } = adminData;
 
     const response = await axios.post(
-      "http://localhost:3000/login",
+      `${import.meta.env.VITE_SERVER_BASEURL}/login`,
       { Email, Password },
       { headers: { "Content-Type": "application/json" }, withCredentials: true }
     );

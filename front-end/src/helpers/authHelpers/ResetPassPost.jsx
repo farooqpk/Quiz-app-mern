@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const resetPassApiReq = async (password,email) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/resetPass",
+      const response = await axios.put(
+        `${import.meta.env.VITE_SERVER_BASEURL}/resetPass`,
         {password,email},
         { headers: { "Content-Type": "application/json" }, withCredentials: true}
       );
@@ -45,7 +45,7 @@ export const ResetPassPost=({password, handleResetPassErr,email})=>{
     }
 
     if(data){
-      console.log(data);
+      
         navigate('/login')
     }
 

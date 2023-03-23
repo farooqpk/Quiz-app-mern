@@ -1,6 +1,7 @@
 import otpModel from "../models/otpModel.js";
 import bcrypt from "bcrypt";
-import { CreateResetPassToken } from "../middlewares/createToken.js";
+import { CreateResetPassToken } from "../middlewares/CreateResetPassToken.js";
+
 
 export const verifyOtp = async (req, res) => {
   try {

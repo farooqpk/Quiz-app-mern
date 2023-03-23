@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const otpApiReq = async (otp, Email) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/verifyOtp",
+      `${import.meta.env.VITE_SERVER_BASEURL}/verifyOtp`,
       { otp, Email },
       { headers: { "Content-Type": "application/json" }, withCredentials: true}
     );
