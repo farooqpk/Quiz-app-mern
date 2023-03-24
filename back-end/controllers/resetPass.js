@@ -11,7 +11,7 @@ export const resetPass = async (req, res) => {
         $set: { password: hashPassword },
       }
     );
-    console.log(admin);
+    
 
     res.status(200).json(true);
   } catch (error) {

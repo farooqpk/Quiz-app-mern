@@ -2,6 +2,8 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { EmailContext } from "../../context/EmailContextProvider";
 
 
 const forgotApiReq = async (Email) => {
@@ -24,8 +26,11 @@ const forgotApiReq = async (Email) => {
   }
 };
 
-export const ForgotPost = ({ Email, handleForgotErr }) => {
+export const ForgotPost = ({ handleForgotErr }) => {
+
   const navigate = useNavigate();
+  const {Email,setEmail}=useContext(EmailContext)
+
 
   const { data, error, isError, isLoading } = useQuery(
     "forgotPass",
@@ -46,7 +51,7 @@ export const ForgotPost = ({ Email, handleForgotErr }) => {
   }
 
   if (data) {
-    navigate("/otpForm", { state: Email && Email });
+    navigate("/otpForm");
   }
 
   return null;

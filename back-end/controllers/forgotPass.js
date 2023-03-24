@@ -6,7 +6,7 @@ import nodemailer from "nodemailer";
 
 export const forgotPass = async (req, res) => {
   try {
-    console.log(req.body.Email);
+   
     const admin = await adminModel.findOne({ email: req.body.Email });
     if (admin) {
       

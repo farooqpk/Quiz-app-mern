@@ -7,6 +7,7 @@ import { ForgotPass } from "./pages/admin/auths/ForgotPass";
 import { OtpForm } from "./pages/admin/auths/OtpForm";
 import { ResetPass } from "./pages/admin/auths/ResetPass";
 import { VerifyToken } from "./helpers/authHelpers/VerifyToken";
+import { EmailContextProvider } from "./context/EmailContextProvider";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+        <EmailContextProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -24,6 +26,7 @@ function App() {
             <Route path="/resetPass" element={<ResetPass />} />
           </Routes>
         </BrowserRouter>
+        </EmailContextProvider>
       </QueryClientProvider>
     </>
   );

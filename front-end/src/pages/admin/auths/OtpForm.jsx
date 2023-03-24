@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { OtpPost } from "../../../helpers/authHelpers/OtpPost";
-import { useLocation } from "react-router-dom";
+
 
 const schema = yup.object().shape({
   otp: yup.string().required("required").length(5),
@@ -11,7 +11,6 @@ const schema = yup.object().shape({
 
 export const OtpForm = () => {
 
-  const location = useLocation();
 
   const [otpData, setOtpData] = useState(Number);
   const [otpErr, setOtpErr] = useState("");
@@ -29,13 +28,12 @@ export const OtpForm = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
   return (
     <>
-      {otpData && <OtpPost otpData={otpData} handleOtpErr={handleOtpErr} Email={location.state} />}
+      {otpData && <OtpPost otpData={otpData} handleOtpErr={handleOtpErr} />}
 
       <section className="flex justify-center h-screen items-center max-w-full flex-wrap">
         <div className="bg-white rounded-lg w-full p-3 mx-4 lg:max-w-xl">

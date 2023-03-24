@@ -2,6 +2,8 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { EmailContext } from "../../context/EmailContextProvider";
 
 const otpApiReq = async (otp, Email) => {
   try {
@@ -23,8 +25,11 @@ const otpApiReq = async (otp, Email) => {
   }
 };
 
-export const OtpPost = ({ otpData, handleOtpErr, Email}) => {
+export const OtpPost = ({ otpData, handleOtpErr}) => {
+
   const navigate = useNavigate();
+  const {Email,setEmail}=useContext(EmailContext)
+
   const { data, error, isError, isLoading } = useQuery(
     "otpSend",
     () => otpApiReq(otpData, Email),
@@ -41,6 +46,6 @@ export const OtpPost = ({ otpData, handleOtpErr, Email}) => {
     return <Loader />;
   }
   if (data) {
-    navigate("/resetPass",{state:Email && Email});
+    navigate("/resetPass");
   }
 };

@@ -3,22 +3,25 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { ForgotPost } from "../../../helpers/authHelpers/ForgotPost";
+import { useContext } from "react";
+import { EmailContext } from "../../../context/EmailContextProvider";
 
 const schema = yup.object().shape({
   Email: yup.string().required("email is required").email("enter valid email"),
 });
 
 export const ForgotPass = () => {
-  const [EmailForForgot, setEmailForForgot] = useState("");
+  
   const [forgotErr, setForgotErr] = useState("");
+  const {Email,setEmail}=useContext(EmailContext)
 
   const handleForgotErr = (msg) => {
     setForgotErr(msg);
-    setEmailForForgot(null)
+    setEmail(null)
   };
 
   const onclickSumbit = (data) => {
-    setEmailForForgot(data.Email);
+    setEmail(data.Email);
   };
   const {
     register,
@@ -28,8 +31,8 @@ export const ForgotPass = () => {
 
   return (
     <>
-      {EmailForForgot && (
-        <ForgotPost Email={EmailForForgot} handleForgotErr={handleForgotErr} />
+      {Email && (
+        <ForgotPost  handleForgotErr={handleForgotErr} />
       )}
 
       <section className="flex justify-center h-screen items-center max-w-full flex-wrap">

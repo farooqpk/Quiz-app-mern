@@ -5,10 +5,10 @@ import { CreateResetPassToken } from "../middlewares/CreateResetPassToken.js";
 
 export const verifyOtp = async (req, res) => {
   try {
-    console.log(req.body.Email);
+    
     const Otp = await otpModel.findOne({ email: req.body.Email });
     const isMatch = await bcrypt.compare(req.body.otp, Otp.otp);
-    console.log(isMatch);
+   
     if (!isMatch) {
       res.status(401).json({ success: false, message: "otp is incorrect!" });
     } else {

@@ -2,6 +2,8 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { EmailContext } from "../../context/EmailContextProvider";
 
 
 const resetPassApiReq = async (password,email) => {
@@ -25,12 +27,14 @@ const resetPassApiReq = async (password,email) => {
   };
 
 
-export const ResetPassPost=({password, handleResetPassErr,email})=>{
+export const ResetPassPost=({password, handleResetPassErr})=>{
 
     const navigate = useNavigate();
+    const {Email,setEmail}=useContext(EmailContext)
+
     const { data, error, isError, isLoading } = useQuery(
       "resetPass",
-      () => resetPassApiReq(password,email),
+      () => resetPassApiReq(password,Email),
       {
         enabled: !!password,
         retry: false
