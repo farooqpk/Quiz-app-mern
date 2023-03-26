@@ -3,10 +3,10 @@ import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
 
-const verifyTokenApiReq = async () => {
+const logoutApiReq = async () => {
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_BASEURL}/verifyToken`,
+    const response = await axios.delete(
+      `${import.meta.env.VITE_SERVER_BASEURL}/logout`,
       { headers: { "Content-Type": "application/json" }, withCredentials: true }
     );
     return response.data;
@@ -21,18 +21,20 @@ const verifyTokenApiReq = async () => {
   }
 };
 
-export const VerifyToken = ({ children }) => {
+export const LogoutDelete = ({logOutStatus}) => {
   const navigate = useNavigate();
   const { data, error, isError, isLoading } = useQuery(
-    "verifytoken",
-    () => verifyTokenApiReq(),
+    "logout",
+    () => logoutApiReq(),
     {
+      enabled:!!logOutStatus,
       retry: false,
     }
   );
 
   if (data) {
-    return children;
+    console.log(data);
+    navigate('/login')
   }
   if (isLoading) {
     <Loader />;

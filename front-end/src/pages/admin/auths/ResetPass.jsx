@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { ResetPassPost } from "../../../helpers/authHelpers/ResetPassPost";
+import {ResetPassPut} from '../../../helpers/authHelpers/ResetPassPut'
 
 
 export const ResetPass = () => {
@@ -32,7 +32,7 @@ export const ResetPass = () => {
 
   return (
     <>
-      {password && <ResetPassPost password={password} handleResetPassErr={handleResetPassErr} />}
+      {password && <ResetPassPut password={password} handleResetPassErr={handleResetPassErr} />}
 
       <section className="flex justify-center h-screen items-center max-w-full flex-wrap">
         <div className="bg-white rounded-lg w-full p-3 mx-4 lg:max-w-xl">

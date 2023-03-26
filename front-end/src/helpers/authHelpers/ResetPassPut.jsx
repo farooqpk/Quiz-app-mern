@@ -27,7 +27,7 @@ const resetPassApiReq = async (password,email) => {
   };
 
 
-export const ResetPassPost=({password, handleResetPassErr})=>{
+export const ResetPassPut=({password, handleResetPassErr})=>{
 
     const navigate = useNavigate();
     const {Email,setEmail}=useContext(EmailContext)

@@ -6,7 +6,7 @@ import { AdminHome } from "./pages/admin/home/AdminHome";
 import { ForgotPass } from "./pages/admin/auths/ForgotPass";
 import { OtpForm } from "./pages/admin/auths/OtpForm";
 import { ResetPass } from "./pages/admin/auths/ResetPass";
-import { VerifyToken } from "./helpers/authHelpers/VerifyToken";
+import {VerifyTokenGet}from './helpers/authHelpers/VerifyTokenGet'
 import { EmailContextProvider } from "./context/EmailContextProvider";
 
 const queryClient = new QueryClient();
@@ -20,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/adminHome" element={<VerifyToken children={<AdminHome/>} />} />
+            <Route path="/adminHome" element={<VerifyTokenGet children={<AdminHome/>} />} />
             <Route path="/forgotPass" element={<ForgotPass />} />
             <Route path="/otpForm" element={<OtpForm />} />
             <Route path="/resetPass" element={<ResetPass />} />
