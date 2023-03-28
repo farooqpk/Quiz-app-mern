@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-  
+ 
   if (req.headers.cookie) {
     const cookies = req.headers.cookie.split(";");
     let token;
@@ -18,17 +18,26 @@ export const verifyToken = (req, res, next) => {
           res.status(403).json({
             success: false,
             message: "invalid token, try again!",
+            
           });
+          
         } else {
+          
           next();
           res.status(200).json({ success: true });
         }
       });
     } else {
+      
       res.status(403).json({
         success: false,
         message: "there is an issue with your credentials!",
       });
     }
+  }else{
+    res.status(403).json({
+      success: false,
+      message: "there is an issue with your credentials!",
+    });
   }
 };

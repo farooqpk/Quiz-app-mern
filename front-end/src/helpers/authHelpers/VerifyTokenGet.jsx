@@ -34,8 +34,9 @@ export const VerifyTokenGet = ({ children }) => {
   if (data) {
     return children;
   }
+  
   if (isLoading) {
-    <Loader />;
+    return <Loader color={'white'} />;
   }
   if (isError) {
     navigate("/login");
