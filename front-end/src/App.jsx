@@ -8,6 +8,8 @@ import { OtpForm } from "./pages/admin/auths/OtpForm";
 import { ResetPass } from "./pages/admin/auths/ResetPass";
 import {VerifyTokenGet}from './helpers/authHelpers/VerifyTokenGet'
 import { EmailContextProvider } from "./context/EmailContextProvider";
+import { CreateQuiz } from "./pages/admin/quiz/CreateQuiz";
+
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,7 @@ function App() {
             <Route path="/forgotPass" element={<ForgotPass />} />
             <Route path="/otpForm" element={<OtpForm />} />
             <Route path="/resetPass" element={<ResetPass />} />
+            <Route path="/createQuiz" element={<CreateQuiz />} />
           </Routes>
         </BrowserRouter>
         </EmailContextProvider>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import Loader from "../../components/Loader";
+import Loader from "../../components/commons/Loader";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { EmailContext } from "../../context/EmailContextProvider";

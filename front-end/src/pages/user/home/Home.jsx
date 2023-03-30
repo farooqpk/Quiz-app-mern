@@ -1,4 +1,4 @@
-import { QuizCard } from "../../../components/QuizCard";
+import { QuizCard } from "../../../components/userside/QuizCard";
 
 export const Home = () => {
   return (

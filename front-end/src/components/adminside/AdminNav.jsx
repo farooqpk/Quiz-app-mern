@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { LogoutDelete } from "../helpers/authHelpers/LogoutDelete";
+import { LogoutDelete } from "../../helpers/authHelpers/LogoutDelete";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 export const AdminNav = () => {
   const [logOutStatus, setLogOutStatus] = useState(false);
@@ -52,17 +53,17 @@ export const AdminNav = () => {
                 className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-max"
               >
                 <li>
-                  <a className="bg-inherit  md:text-lg  hover:bg-gray-300 text-black">
+                  <Link to={'/CreateQuiz'} className="bg-inherit  md:text-lg  hover:bg-gray-300 text-black">
                     Create Quiz
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="navbar-center">
-            <a className="btn btn-ghost normal-case text-xl text-black">
+            <Link className="btn btn-ghost normal-case text-xl text-black">
               AdminHome
-            </a>
+            </Link>
           </div>
           <div className="navbar-end">
             <div className="dropdown dropdown-end">
