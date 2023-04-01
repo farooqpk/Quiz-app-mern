@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import Loader from "../../components/commons/Loader";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { EmailContext } from "../../context/EmailContextProvider";
+import { EmailContext } from "../../context/adminSide/EmailContextProvider";
 
 const otpApiReq = async (otp, Email) => {
   try {

@@ -7,8 +7,10 @@ import { ForgotPass } from "./pages/admin/auths/ForgotPass";
 import { OtpForm } from "./pages/admin/auths/OtpForm";
 import { ResetPass } from "./pages/admin/auths/ResetPass";
 import {VerifyTokenGet}from './helpers/authHelpers/VerifyTokenGet'
-import { EmailContextProvider } from "./context/EmailContextProvider";
+import { EmailContextProvider } from "./context/adminSide/EmailContextProvider";
 import { CreateQuiz } from "./pages/admin/quiz/CreateQuiz";
+import { CreateQuizFormNextBtnContextProvider} from "./context/adminSide/CreateQuizFormNextBtnContextProvider";
+
 
 
 const queryClient = new QueryClient();
@@ -17,6 +19,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+        <CreateQuizFormNextBtnContextProvider>
         <EmailContextProvider>
         <BrowserRouter>
           <Routes>
@@ -30,6 +33,7 @@ function App() {
           </Routes>
         </BrowserRouter>
         </EmailContextProvider>
+        </CreateQuizFormNextBtnContextProvider>
       </QueryClientProvider>
     </>
   );

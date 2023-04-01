@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { ForgotPost } from "../../../helpers/authHelpers/ForgotPost";
 import { useContext } from "react";
-import { EmailContext } from "../../../context/EmailContextProvider";
+import { EmailContext } from "../../../context/adminSide/EmailContextProvider";
 
 const schema = yup.object().shape({
   Email: yup.string().required("email is required").email("enter valid email"),
