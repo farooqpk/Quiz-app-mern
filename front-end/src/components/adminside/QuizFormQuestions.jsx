@@ -1,27 +1,47 @@
 import { useContext, useEffect, useState } from "react";
-
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 
 export const QuizFormQuestions = () => {
-
-
   const [totalOption, setTotalOption] = useState(0);
   const [options, setOptions] = useState([]);
   const [correctAnsOption, setCorrectAnsOption] = useState([]);
-  
+  const { CreateQuizFormData, setCreateQuizFormData } = useContext(
+    CreateQuizFormDataContext
+  );
+
+  const schema = yup.object().shape({
+    Question: yup.string().required("required"),
+    NoOfOptions: yup.number().required().typeError("required"),
+    CorrectAns: yup.string().required("required"),
+  });
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const onSubmit = (data) => {
+    setCreateQuizFormData({ ...CreateQuizFormData, ...data });
+  };
 
   const handleOptionsAccToNumber = () => {
     const optionArray = Array.from({ length: totalOption }, (_, index) => {
       return (
         <label className="input-group input-group-vertical">
-          <span  key={index+1}>option {index + 1}</span>
+          <span key={index + 1}>option {index + 1}</span>
           <input
             type="text"
+            required
+            {...register(`option ${index + 1}`)}
             className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
           />
         </label>
       );
     });
-
     setOptions(optionArray);
   };
 
@@ -37,7 +57,7 @@ export const QuizFormQuestions = () => {
     const correctAnswerOptionArray = Array.from(
       { length: options.length },
       (item, index) => {
-        return <option key={index+1}>option {index + 1}</option>;
+        return <option key={index + 1}>option {index + 1}</option>;
       }
     );
     setCorrectAnsOption(correctAnswerOptionArray);
@@ -47,11 +67,14 @@ export const QuizFormQuestions = () => {
     handleCorrectAnswerOptionSelect();
   }, [options]);
 
-
   return (
     <>
+      {CreateQuizFormData && console.log(CreateQuizFormData)}
       <div className=" bg-white ">
-        <form className="flex flex-col items-center">
+        <form
+          className="flex flex-col items-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="mt-5">
             <h1 className="text-xl font-semibold text-black text-center">
               Make Questions
@@ -64,8 +87,14 @@ export const QuizFormQuestions = () => {
             </label>
             <textarea
               rows="2"
+              {...register("Question")}
               className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
             ></textarea>
+            {errors.Question && (
+              <p className="text-red-600 text-center">
+                {errors.Question.message}
+              </p>
+            )}
           </div>
 
           <div className="mt-7 w-4/5 flex flex-col items-center">
@@ -74,11 +103,18 @@ export const QuizFormQuestions = () => {
             </label>
             <input
               type="number"
-              onChange={handleTotalOption}
               max={6}
               min={1}
+              {...register("NoOfOptions", {
+                onChange: handleTotalOption,
+              })}
               className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
+            {errors.NoOfOptions && (
+              <p className="text-red-600 text-center">
+                {errors.NoOfOptions.message}
+              </p>
+            )}
           </div>
 
           {options.length > 0 && (
@@ -96,16 +132,20 @@ export const QuizFormQuestions = () => {
                 Correct answer
               </label>
 
-              <select className=" px-4 py-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40">
-                <option disabled selected>
-                  select
-                </option>
+              <select
+                {...register("CorrectAns")}
+                className=" px-4 py-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              >
+                <option disabled>select</option>
                 {correctAnsOption}
               </select>
             </div>
           )}
+
           <div className="flex my-8 gap-2 w-auto justify-center">
-            <button className="btn btn-outline btn-sm rounded-3xl">Finish</button>
+            <button className="btn btn-outline btn-sm rounded-3xl">
+              Finish
+            </button>
             <button className="btn btn-outline btn-sm rounded-3xl">Add</button>
           </div>
         </form>

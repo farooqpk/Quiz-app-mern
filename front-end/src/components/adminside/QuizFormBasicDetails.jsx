@@ -3,22 +3,24 @@ import { CreateQuizFormNextBtnContext } from "../../context/adminSide/CreateQuiz
 import {useForm} from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup";
+import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 
 
 export const QuizFormBasicDetails = () => {
 
 const {isNextClick, setIsNextClick}=useContext(CreateQuizFormNextBtnContext)
+const {CreateQuizFormData, setCreateQuizFormData} = useContext(CreateQuizFormDataContext)
 
 const handleNextBtn=(data)=>{
-  console.log(data);
+  setCreateQuizFormData(data)
   setIsNextClick(!isNextClick)
 }
 
 const schema= yup.object().shape({
 Title:yup.string().required('required'),
 Description:yup.string().required('required'),
-Duration:yup.string().required('required'),
-EachQMark:yup.string().required('required')
+Duration:yup.number().required().typeError('required'),
+EachQMark:yup.number().required().typeError('required')
 })
 
 const {register,handleSubmit,formState:{errors}} =  useForm({ resolver: yupResolver(schema)})

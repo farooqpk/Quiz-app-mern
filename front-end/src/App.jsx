@@ -10,6 +10,7 @@ import {VerifyTokenGet}from './helpers/authHelpers/VerifyTokenGet'
 import { EmailContextProvider } from "./context/adminSide/EmailContextProvider";
 import { CreateQuiz } from "./pages/admin/quiz/CreateQuiz";
 import { CreateQuizFormNextBtnContextProvider} from "./context/adminSide/CreateQuizFormNextBtnContextProvider";
+import { CreateQuizFormDataContextProvider } from "./context/adminSide/CreateQuizFormDataContextProvider";
 
 
 
@@ -19,6 +20,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+        <CreateQuizFormDataContextProvider>
         <CreateQuizFormNextBtnContextProvider>
         <EmailContextProvider>
         <BrowserRouter>
@@ -34,6 +36,7 @@ function App() {
         </BrowserRouter>
         </EmailContextProvider>
         </CreateQuizFormNextBtnContextProvider>
+        </CreateQuizFormDataContextProvider>
       </QueryClientProvider>
     </>
   );
