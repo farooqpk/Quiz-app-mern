@@ -5,7 +5,14 @@ export const CreateQuizFormDataContext = createContext(null);
 
 export const CreateQuizFormDataContextProvider = ({ children }) => {
     
-  const [CreateQuizFormData, setCreateQuizFormData] = useState({});
+  const [CreateQuizFormData, setCreateQuizFormData] = useState({
+    
+    EachQMark: 0,
+    Duration: 0,
+    Description: "",
+    Title: "",
+    Questions: []
+  });
 
   return (
     <CreateQuizFormDataContext.Provider
