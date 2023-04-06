@@ -5,7 +5,7 @@ export const Home = () => {
     <main className="h-screen">
       <div className="flex justify-center flex-wrap">
         <header className="p-4 flex my-6 justify-center">
-          <h1 className="text-3xl md:text-5xl text-center font-extrabold font-serif text-white">
+          <h1 className="text-2xl md:text-3xl text-center font-extrabold font-serif text-white">
             Attend quizes and gain your knowledge!
           </h1>
         </header>
