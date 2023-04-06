@@ -31,7 +31,7 @@ function App() {
             <Route path="/forgotPass" element={<ForgotPass />} />
             <Route path="/otpForm" element={<OtpForm />} />
             <Route path="/resetPass" element={<ResetPass />} />
-            <Route path="/createQuiz" element={<CreateQuiz />} />
+            <Route path="/createQuiz" element={<VerifyTokenGet children={<CreateQuiz/>} />} />
           </Routes>
         </BrowserRouter>
         </EmailContextProvider>

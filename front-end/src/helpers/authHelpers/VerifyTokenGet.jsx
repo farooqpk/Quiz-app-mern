@@ -20,7 +20,7 @@ const verifyTokenApiReq = async () => {
     }
   }
 };
-
+//this api request for protect react router
 export const VerifyTokenGet = ({ children }) => {
   const navigate = useNavigate();
   const { data, error, isError, isLoading } = useQuery(

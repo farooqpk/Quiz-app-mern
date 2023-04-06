@@ -1,6 +1,6 @@
-import adminModel from "../models/adminModel.js";
+import adminModel from "../../models/adminModel.js";
 import otpGenerator from "otp-generator";
-import otpModel from "../models/otpModel.js";
+import otpModel from "../../models/otpModel.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 

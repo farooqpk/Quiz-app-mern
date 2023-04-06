@@ -128,7 +128,7 @@ export const QuizFormQuestions = () => {
 
   return (
     <>
-      {isFinished && <CreateQuizPost CreateQuizFormData={CreateQuizFormData} />}
+      {isFinished && <CreateQuizPost/>}
 
       <div className=" bg-white ">
         <form className="flex flex-col items-center">

@@ -1,5 +1,5 @@
-import { createToken } from "../middlewares/createToken.js";
-import adminModel from "../models/adminModel.js";
+import { createToken } from "../../middlewares/createToken.js";
+import adminModel from "../../models/adminModel.js";
 
 export const loginPost = async (req, res) => {
   try {
@@ -22,6 +22,6 @@ export const loginPost = async (req, res) => {
     res
       .status(500)
       .json({ success: false, message: "An error occurred during login" });
-    console.log(error);
+
   }
 };

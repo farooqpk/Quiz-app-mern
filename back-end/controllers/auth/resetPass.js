@@ -1,4 +1,4 @@
-import adminModel from "../models/adminModel.js";
+import adminModel from "../../models/adminModel.js";
 import bcrypt from "bcrypt";
 
 export const resetPass = async (req, res) => {

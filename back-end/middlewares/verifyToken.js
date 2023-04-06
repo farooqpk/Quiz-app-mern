@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res) => {
  
   if (req.headers.cookie) {
     const cookies = req.headers.cookie.split(";");
@@ -22,8 +22,6 @@ export const verifyToken = (req, res, next) => {
           });
           
         } else {
-          
-          next();
           res.status(200).json({ success: true });
         }
       });

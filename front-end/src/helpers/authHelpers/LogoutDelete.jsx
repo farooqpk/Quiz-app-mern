@@ -37,7 +37,7 @@ export const LogoutDelete = ({logOutStatus}) => {
     navigate('/login')
   }
   if (isLoading) {
-    <Loader />;
+   return <Loader />;
   }
   if (isError) {
     navigate("/login");
