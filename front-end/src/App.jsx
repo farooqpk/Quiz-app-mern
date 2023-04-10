@@ -12,6 +12,7 @@ import { CreateQuiz } from "./pages/admin/quiz/CreateQuiz";
 import { CreateQuizFormNextBtnContextProvider} from "./context/adminSide/CreateQuizFormNextBtnContextProvider";
 import { CreateQuizFormDataContextProvider } from "./context/adminSide/CreateQuizFormDataContextProvider";
 import { AllQuizDataContextProvider } from "./context/userSide/AllQuizDataContextPovider";
+import { QuizPage } from "./pages/user/quiz/QuizPage";
 
 
 
@@ -34,6 +35,7 @@ function App() {
             <Route path="/otpForm" element={<OtpForm />} />
             <Route path="/resetPass" element={<ResetPass />} />
             <Route path="/createQuiz" element={<VerifyTokenGet children={<CreateQuiz/>} />} />
+            <Route path="/quizPage" element={<QuizPage/>} />
           </Routes>
         </BrowserRouter>
         </EmailContextProvider>
