@@ -31,7 +31,8 @@ export const QuizFormQuestions = () => {
   const createNewQuestion = (data, questionNo) => {
     let option = [];
     for (let i = 1; i <= data.NoOfOptions; i++) {
-      option.push({ [`option ${i}`]: data[`option ${i}`] });
+      // option.push({ [`option ${i}`]: data[`option ${i}`] });
+      option.push( data[`option ${i}`] );
     }
     const newQuestions = {
       No: questionNo,

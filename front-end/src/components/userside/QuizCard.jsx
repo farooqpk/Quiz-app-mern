@@ -1,4 +1,4 @@
-
+import {Link} from 'react-router-dom'
 
 export const QuizCard = ({quizData}) => {
   
@@ -23,9 +23,9 @@ export const QuizCard = ({quizData}) => {
            total {quizData.EachQMark * quizData.Questions.length } mark
           </p>
           <div className="card-actions mt-3">
-            <button className="btn btn-outline text-zinc-700">
+            <Link to={"/quizPage"} state={quizData} className="btn btn-outline text-zinc-700">
               Start
-            </button>
+            </Link>
           </div>
         </div>
       </div>
