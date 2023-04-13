@@ -14,6 +14,8 @@ import { CreateQuizFormDataContextProvider } from "./context/adminSide/CreateQui
 import { AllQuizDataContextProvider } from "./context/userSide/AllQuizDataContextPovider";
 import { QuizPage } from "./pages/user/quiz/QuizPage";
 import { SelectedAnsContextProvider } from "./context/userSide/SelectedAnsContextProvider";
+import { QuizResult } from "./pages/user/quiz/QuizResult";
+import { SpecificQuizDataContextProvider } from "./context/userSide/SpecificQuizDataContextProvider";
 
 
 
@@ -24,6 +26,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <SelectedAnsContextProvider>
+        <SpecificQuizDataContextProvider>
         <AllQuizDataContextProvider>
         <CreateQuizFormDataContextProvider>
         <CreateQuizFormNextBtnContextProvider>
@@ -38,12 +41,14 @@ function App() {
             <Route path="/resetPass" element={<ResetPass />} />
             <Route path="/createQuiz" element={<VerifyTokenGet children={<CreateQuiz/>} />} />
             <Route path="/quizPage" element={<QuizPage/>} />
+            <Route path="/quizResult" element={<QuizResult/>} />
           </Routes>
         </BrowserRouter>
         </EmailContextProvider>
         </CreateQuizFormNextBtnContextProvider>
         </CreateQuizFormDataContextProvider>
         </AllQuizDataContextProvider>
+        </SpecificQuizDataContextProvider>
         </SelectedAnsContextProvider>
       </QueryClientProvider>
     </>

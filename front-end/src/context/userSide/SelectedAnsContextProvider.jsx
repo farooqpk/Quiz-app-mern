@@ -2,7 +2,8 @@ import { createContext, useState } from "react";
 
 export const SelectedAnsContext = createContext(null);
 export const SelectedAnsContextProvider = ({ children }) => {
-  const [selectedAns, setSelectedAns] = useState({});
+  // const [selectedAns, setSelectedAns] = useState({});
+  const [selectedAns, setSelectedAns] = useState([]);
 
   return (
     <>

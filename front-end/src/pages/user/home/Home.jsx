@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { QuizCard } from "../../../components/userside/QuizCard";
 import { AllQuizDataContext } from "../../../context/userSide/AllQuizDataContextPovider";
 import { GetAllQuizData } from "../../../helpers/quizHelpers/GetAllQuizDatas";
+import {SpecificQuizDataContext } from "../../../context/userSide/SpecificQuizDataContextProvider";
 
 export const Home = () => {
   const { AllquizData, setAllQuizData } = useContext(AllQuizDataContext);
+  const {SpecificQuizData,setSpecificQuizData} = useContext(SpecificQuizDataContext)
 
   return (
     <>
@@ -18,7 +20,10 @@ export const Home = () => {
           </header>
           <section className=" w-full flex justify-center my-2 mt-5 flex-wrap">
             {AllquizData.map((item, index) => {
-             return <QuizCard key={index} quizData={item} />;
+
+              setSpecificQuizData(item)
+             return <QuizCard key={index} />;
+             
             })}
           </section>
         </div>
