@@ -18,7 +18,7 @@ export const QuizFormQuestions = () => {
   const schema = yup.object().shape({
     Question: yup.string().required("required"),
     NoOfOptions: yup.number().required().typeError("required"),
-    CorrectAns: yup.string().required("required"),
+    CorrectAns: yup.number().required("required"),
   });
 
   const {
@@ -34,6 +34,7 @@ export const QuizFormQuestions = () => {
       // option.push({ [`option ${i}`]: data[`option ${i}`] });
       option.push( data[`option ${i}`] );
     }
+    
     const newQuestions = {
       No: questionNo,
       Question: data.Question,
@@ -117,7 +118,7 @@ export const QuizFormQuestions = () => {
     const correctAnswerOptionArray = Array.from(
       { length: options.length },
       (item, index) => {
-        return <option key={index + 1}>option {index + 1}</option>;
+        return <option key={index + 1} value={parseInt(index)}>option {index + 1}</option>;
       }
     );
     setCorrectAnsOption(correctAnswerOptionArray);

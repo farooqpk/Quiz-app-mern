@@ -32,7 +32,7 @@ const quizSchema= mongoose.Schema({
             required:true
         },
         CorrectAns:{
-            type:String,
+            type:Number,
             required:true
         },
         options: {

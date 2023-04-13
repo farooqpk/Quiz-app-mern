@@ -13,6 +13,7 @@ import { CreateQuizFormNextBtnContextProvider} from "./context/adminSide/CreateQ
 import { CreateQuizFormDataContextProvider } from "./context/adminSide/CreateQuizFormDataContextProvider";
 import { AllQuizDataContextProvider } from "./context/userSide/AllQuizDataContextPovider";
 import { QuizPage } from "./pages/user/quiz/QuizPage";
+import { SelectedAnsContextProvider } from "./context/userSide/SelectedAnsContextProvider";
 
 
 
@@ -22,6 +23,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+        <SelectedAnsContextProvider>
         <AllQuizDataContextProvider>
         <CreateQuizFormDataContextProvider>
         <CreateQuizFormNextBtnContextProvider>
@@ -42,6 +44,7 @@ function App() {
         </CreateQuizFormNextBtnContextProvider>
         </CreateQuizFormDataContextProvider>
         </AllQuizDataContextProvider>
+        </SelectedAnsContextProvider>
       </QueryClientProvider>
     </>
   );
