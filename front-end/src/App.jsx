@@ -15,8 +15,6 @@ import { AllQuizDataContextProvider } from "./context/userSide/AllQuizDataContex
 import { QuizPage } from "./pages/user/quiz/QuizPage";
 import { SelectedAnsContextProvider } from "./context/userSide/SelectedAnsContextProvider";
 import { QuizResult } from "./pages/user/quiz/QuizResult";
-import { SpecificQuizDataContextProvider } from "./context/userSide/SpecificQuizDataContextProvider";
-
 
 
 const queryClient = new QueryClient();
@@ -26,7 +24,6 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <SelectedAnsContextProvider>
-        <SpecificQuizDataContextProvider>
         <AllQuizDataContextProvider>
         <CreateQuizFormDataContextProvider>
         <CreateQuizFormNextBtnContextProvider>
@@ -48,7 +45,6 @@ function App() {
         </CreateQuizFormNextBtnContextProvider>
         </CreateQuizFormDataContextProvider>
         </AllQuizDataContextProvider>
-        </SpecificQuizDataContextProvider>
         </SelectedAnsContextProvider>
       </QueryClientProvider>
     </>

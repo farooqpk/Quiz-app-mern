@@ -1,17 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SelectedAnsContext } from "../../../context/userSide/SelectedAnsContextProvider";
-import { SpecificQuizDataContext } from "../../../context/userSide/SpecificQuizDataContextProvider";
 
 export const QuizPage = () => {
-
-  const navigate = useNavigate()
-  const {SpecificQuizData,setSpecificQuizData} = useContext(SpecificQuizDataContext)
-  const [timeLeft, setTimeLeft] = useState(SpecificQuizData.Duration * 60);
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const [timeLeft, setTimeLeft] = useState(state.Duration * 60);
   const { selectedAns, setSelectedAns } = useContext(SelectedAnsContext);
   const [isTimeAlmostFinish, setIsTimeAlmostFinish] = useState(false);
-  const [totalMark,setTotalMark]=useState(0)
-
 
   const autoSumbitWhenTimeEnd = () => {
     // alert("ended");
@@ -30,7 +26,7 @@ export const QuizPage = () => {
     }
 
     //logic for time ending signal
-    if (timeLeft === (SpecificQuizData.Duration * 60) / 4) {
+    if (timeLeft === (state.Duration * 60) / 4) {
       setIsTimeAlmostFinish(true);
       if (!navigator.vibrate(200)) {
         return;
@@ -41,7 +37,6 @@ export const QuizPage = () => {
     //cleanup function when component unmounts
     return () => clearInterval(intervalId);
   }, [timeLeft]);
-
 
   const handleSelect = (questionNo, selected) => {
     //find index to check same object exist
@@ -54,56 +49,47 @@ export const QuizPage = () => {
       updatedSelectedAns[index][questionNo] = selected; // in this accessing value inside the array of object and replace value with user selected. eg: updatedSelectAns is array and access index like updatedSelectAns[index] means 0th object then access quesitonNo of that object then replace value.
       setSelectedAns(updatedSelectedAns);
     }
-
-    // const value = location.state.Questions.map((item, index) => {
-    //   return item.options[item.CorrectAns];
-    // });
-    // if (value.includes(selectedAns)) {
-    //   alert("answer correct");
-    //   setSelectedAns((prev)=> ({...prev, [questionNo]:true}))
-
-    // } else {
-    //   alert("incorrect");
-    // }
   };
 
   const handleSumbit = (event) => {
     event.preventDefault();
 
-    //logic to check wether the ans is correct and calc mark
-    const marks = SpecificQuizData.Questions.reduce((acc,item)=>{
+    const result = state.Questions.reduce(
+      (acc, item) => {
+        const selected = selectedAns.find((obj) => obj[item.No]);
+        const isCorrect = selected
+          ? selected[item.No] === item.options[item.CorrectAns]
+          : false;
+        if (isCorrect) {
+          acc.totalMark += state.EachQMark;
+        } else {
+          // if user answer is incorrect we create array to show that question,correct answer and wrong answer he did
+          acc.resultArray.push({
+            question: item.Question,
+            answer: item.options[item.CorrectAns],
+            wrong: selected[item.No],
+          });
+        }
 
-      const selected = selectedAns.find((answer)=>answer[item.No]);
-      const isCorrect = selected ? selected[item.No] === item.options[item.CorrectAns] : false;
-      if (isCorrect) {
-        acc += SpecificQuizData.EachQMark;
-      }
-      return acc;
+        return acc;
+      },
+      { totalMark: 0, resultArray: [] }
+    );
 
-    },0)
-    
-    setTotalMark((prevMark)=>prevMark+marks);
-    navigate("/quizResult")
-
-  //  OR    location.state.Questions.forEach((item,index)=>{
-  //    const selected = selectedAns.find((answer)=>answer[item.No])
-  //    console.log(selected);
-  //    if(selected){
-  //    const isCorrect = selected[item.No]===item.options[item.CorrectAns]
-  //     isCorrect && setTotalMark((prev)=>prev+location.state.EachQMark) 
-  //    }
-  //   })
+    navigate("/quizResult", {
+      state: {
+        totalMark: result.totalMark,
+        resultArr: result.resultArray.length > 0 && result.resultArray,
+      },
+    });
   };
 
   return (
     <>
-  
       <main className="h-auto w-full flex justify-center items-center">
         <header className="bg-gray-100 fixed top-0 w-full z-10">
           <div className="flex justify-center mt-5">
-            <h1 className="text-black font-semibold text-xl">
-              {SpecificQuizData.Title}
-            </h1>
+            <h1 className="text-black font-semibold text-xl">{state.Title}</h1>
           </div>
           <div className="flex justify-evenly mt-5">
             <p
@@ -116,13 +102,13 @@ export const QuizPage = () => {
               {Math.floor(timeLeft / 60)}:{timeLeft % 60}
             </p>
             <p className="text-black">
-              {SpecificQuizData.EachQMark * SpecificQuizData.Questions.length} marks
+              {state.EachQMark * state.Questions.length} marks
             </p>
           </div>
         </header>
 
         <form className=" my-6 w-5/6 mt-24" onSubmit={handleSumbit}>
-          {SpecificQuizData.Questions.map((item, index) => {
+          {state.Questions.map((item, index) => {
             return (
               <section className="mt-3 bg-gray-100 rounded-lg scroll-m-0">
                 <div className="flex flex-col items-center gap-1">
