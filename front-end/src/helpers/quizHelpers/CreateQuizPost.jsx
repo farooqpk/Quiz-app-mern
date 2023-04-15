@@ -4,6 +4,7 @@ import Loader from "../../components/commons/Loader";
 import { CreateQuizFormNextBtnContext } from "../../context/adminSide/CreateQuizFormNextBtnContextProvider";
 import { useContext } from "react";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
+import { CreateQuizIsFinishedContext } from "../../context/adminSide/CreateQuizIsFinishedContextProvider";
 import { useNavigate } from "react-router-dom";
 
 const createQuizApi = async (CreateQuizFormData) => {
@@ -29,13 +30,15 @@ const createQuizApi = async (CreateQuizFormData) => {
 
 export const CreateQuizPost = () => {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+
   const { CreateQuizFormData, setCreateQuizFormData } = useContext(
     CreateQuizFormDataContext
   );
   const { isNextClick, setIsNextClick } = useContext(
     CreateQuizFormNextBtnContext
   );
+  const {isFinished, SetisFinished} = useContext(CreateQuizIsFinishedContext)
 
   const { data, error, isError, isLoading } = useQuery(
     "CreateQuizFormData",
@@ -52,7 +55,7 @@ export const CreateQuizPost = () => {
 
   if (data) {
     setIsNextClick(!isNextClick)
-    navigate("/adminHome");
+    SetisFinished(!isFinished)
   }
 
   if (isError) {

@@ -9,10 +9,6 @@ export const QuizPage = () => {
   const { selectedAns, setSelectedAns } = useContext(SelectedAnsContext);
   const [isTimeAlmostFinish, setIsTimeAlmostFinish] = useState(false);
 
-  const autoSumbitWhenTimeEnd = () => {
-    // alert("ended");
-  };
-
   useEffect(() => {
     //logic for time decriment
     const intervalId = setInterval(() => {
@@ -22,7 +18,7 @@ export const QuizPage = () => {
     //logic for stop timer and autosumbit
     if (timeLeft === 0) {
       clearInterval(intervalId);
-      autoSumbitWhenTimeEnd();
+      handleSumbit();
     }
 
     //logic for time ending signal
@@ -52,16 +48,26 @@ export const QuizPage = () => {
   };
 
   const handleSumbit = (event) => {
-    event.preventDefault();
+    event && event.preventDefault();
 
-    const result = state.Questions.reduce(
-      (acc, item) => {
+    const result = state.Questions.reduce((acc, item) => {
+
         const selected = selectedAns.find((obj) => obj[item.No]);
+
         const isCorrect = selected
           ? selected[item.No] === item.options[item.CorrectAns]
           : false;
+          
+        const isUnanswered = selected ? false : true; //if user not selected any options
+
         if (isCorrect) {
-          acc.totalMark += state.EachQMark;
+          acc.userMark += state.EachQMark;
+        } else if (isUnanswered) {
+          acc.resultArray.push({
+            question: item.Question,
+            answer: item.options[item.CorrectAns],
+            wrong: "Unanswered",
+          });
         } else {
           // if user answer is incorrect we create array to show that question,correct answer and wrong answer he did
           acc.resultArray.push({
@@ -73,12 +79,13 @@ export const QuizPage = () => {
 
         return acc;
       },
-      { totalMark: 0, resultArray: [] }
+      { userMark: 0, resultArray: [] }
     );
 
     navigate("/quizResult", {
       state: {
-        totalMark: result.totalMark,
+        outOfMark: state.Questions.length * state.EachQMark,
+        userMark: result.userMark,
         resultArr: result.resultArray.length > 0 && result.resultArray,
       },
     });
@@ -110,7 +117,10 @@ export const QuizPage = () => {
         <form className=" my-6 w-5/6 mt-24" onSubmit={handleSumbit}>
           {state.Questions.map((item, index) => {
             return (
-              <section className="mt-3 bg-gray-100 rounded-lg scroll-m-0">
+              <section
+                key={index}
+                className="mt-3 bg-gray-100 rounded-lg scroll-m-0"
+              >
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-black p-3">Question #{item.No} </span>
                   <hr className="border border-slate-200 w-full my-1" />

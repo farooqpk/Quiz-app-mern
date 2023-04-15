@@ -4,13 +4,14 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 import { CreateQuizPost } from "../../helpers/quizHelpers/CreateQuizPost";
+import { CreateQuizIsFinishedContext } from "../../context/adminSide/CreateQuizIsFinishedContextProvider";
 
 export const QuizFormQuestions = () => {
   const [totalOption, setTotalOption] = useState(0);
   const [options, setOptions] = useState([]);
   const [correctAnsOption, setCorrectAnsOption] = useState([]);
   const [QuestionNO, setQuestionNo] = useState(1);
-  const [isFinished, SetisFinished] = useState(false);
+  const {isFinished, SetisFinished} = useContext(CreateQuizIsFinishedContext)
   const { CreateQuizFormData, setCreateQuizFormData } = useContext(
     CreateQuizFormDataContext
   );
@@ -81,7 +82,7 @@ export const QuizFormQuestions = () => {
     };
     setCreateQuizFormData(formData);
     setTotalOption(null);
-    SetisFinished(true);
+    SetisFinished(!isFinished);
   };
 
   const handleOptionsAccToNumber = () => {
@@ -110,7 +111,6 @@ export const QuizFormQuestions = () => {
 
   const handleTotalOption = (event) => {
     // here we trigger event with onInput instead of onChange because onchange doest to trigger same value if i input again , but onInput allow us to input even same value which we entered before
-    console.log(parseInt(event.target.value));
     setTotalOption(parseInt(event.target.value));
   };
 

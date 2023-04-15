@@ -1,5 +1,5 @@
 import { AdminNav } from "../../../components/adminside/AdminNav";
-import { Footer } from "../../../components/adminside/Footer";
+import { Footer } from "../../../components/commons/Footer";
 
 export const AdminHome = () => {
   return (
