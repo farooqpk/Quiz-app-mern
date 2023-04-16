@@ -8,13 +8,13 @@ import { CreateQuizIsFinishedContext } from "../../context/adminSide/CreateQuizI
 import { useNavigate } from "react-router-dom";
 
 const createQuizApi = async (CreateQuizFormData) => {
- 
+  console.log(CreateQuizFormData);
+
   try {
-    
     const response = await axios.post(
       `${import.meta.env.VITE_SERVER_BASEURL}/createQuiz`,
-      CreateQuizFormData ,
-      { headers: { "Content-Type": "application/json" }, withCredentials: true}
+      CreateQuizFormData,
+      { headers: { "Content-Type": "application/json" }, withCredentials: true }
     );
     return response.data;
   } catch (error) {
@@ -29,8 +29,7 @@ const createQuizApi = async (CreateQuizFormData) => {
 };
 
 export const CreateQuizPost = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { CreateQuizFormData, setCreateQuizFormData } = useContext(
     CreateQuizFormDataContext
@@ -38,14 +37,15 @@ export const CreateQuizPost = () => {
   const { isNextClick, setIsNextClick } = useContext(
     CreateQuizFormNextBtnContext
   );
-  const {isFinished, SetisFinished} = useContext(CreateQuizIsFinishedContext)
+  const { isFinished, SetisFinished } = useContext(CreateQuizIsFinishedContext);
 
-  const { data, error, isError, isLoading } = useQuery(
+  const { data, error, isError, isLoading} = useQuery(
     "CreateQuizFormData",
     () => createQuizApi(CreateQuizFormData),
     {
       enabled: !!CreateQuizFormData,
       retry: false,
+
     }
   );
 
@@ -54,11 +54,12 @@ export const CreateQuizPost = () => {
   }
 
   if (data) {
-    setIsNextClick(!isNextClick)
-    SetisFinished(!isFinished)
+    setIsNextClick(!isNextClick);
+    SetisFinished(!isFinished);
   }
 
   if (isError) {
     navigate("/login");
   }
+
 };

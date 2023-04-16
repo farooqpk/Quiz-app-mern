@@ -1,15 +1,12 @@
-
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import Loader from "../../components/commons/Loader";
-import { useNavigate } from "react-router-dom";
-
 
 const deleteQuizApi = async (quizId) => {
   try {
     const response = await axios.delete(
-      `${import.meta.env.VITE_SERVER_BASEURL}/deleteQuiz`,
-      quizId,
+      `${import.meta.env.VITE_SERVER_BASEURL}/deleteQuiz/${quizId}`,
+
       { headers: { "Content-Type": "application/json" }, withCredentials: true }
     );
     return response.data;
@@ -24,28 +21,27 @@ const deleteQuizApi = async (quizId) => {
   }
 };
 
-export const DeleteQuiz = ({quizId}) => {
+export const DeleteQuiz = ({ quizId, handleDeleteQuiz }) => {
+  const queryClient = useQueryClient();
 
-  const navigate= useNavigate()
   const { data, error, isError, isLoading } = useQuery(
     "deleteQuiz",
     () => deleteQuizApi(quizId),
     {
-      enabled: !!quizId,
       retry: false,
+      onSuccess: () => {
+        // upddate this state to correct the conditon in the QuizCard component delete button click toggle
+        handleDeleteQuiz();
+        //to fetch updated GetQuizData query after delete
+        queryClient.fetchQuery("getQuizDatas");
+      },
     }
   );
-
-  if (data) {
-    console.log(data);
-    navigate("/adminHome")
-  }
 
   if (isLoading) {
     return <Loader />;
   }
   if (isError) {
-    console.log(error);
     return <Loader />;
   }
 };

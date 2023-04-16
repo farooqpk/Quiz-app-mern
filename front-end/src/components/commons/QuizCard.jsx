@@ -1,9 +1,10 @@
-import { useState } from "react";
+import {useState } from "react";
 import { Link } from "react-router-dom";
 import { DeleteQuiz } from "../../helpers/quizHelpers/DeleteQuiz";
 
 export const QuizCard = ({ quizData, adminSide }) => {
 
+ 
   const [isDeleteQuiz, setIsDeleteQuiz] = useState(false);
 
   const handleDeleteQuiz = () => {
@@ -12,7 +13,7 @@ export const QuizCard = ({ quizData, adminSide }) => {
 
   return (
     <>
-      {isDeleteQuiz && <DeleteQuiz quizId={quizData._id} />}
+      {isDeleteQuiz && <DeleteQuiz quizId={quizData._id} handleDeleteQuiz={handleDeleteQuiz} />}
 
       <div className="md:w-2/4 sm:w-2/4 lg:w-1/4 w-3/4 card bg-gray-200 shadow-xl rounded-xl mx-5 flex flex-wrap my-2">
         <div className="card-body items-center text-center w-full">

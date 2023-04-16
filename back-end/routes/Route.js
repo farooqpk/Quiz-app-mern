@@ -9,6 +9,7 @@ import { verifyToken } from "../middlewares/verifyToken.js";
 import { createQuiz } from "../controllers/quiz/createQuiz.js";
 import { verifyApiRoutes } from "../middlewares/verifyApiRoutes.js";
 import { getQuizData } from "../controllers/quiz/getQuizData.js";
+import { deleteQuiz } from "../controllers/quiz/deleteQuiz.js";
 
 
 const router = express.Router();
@@ -29,6 +30,8 @@ router.delete("/logout",verifyToken,logout)
 router.post("/createQuiz",verifyApiRoutes,createQuiz)
 
 router.get("/getQuizData",getQuizData)
+
+router.delete("/deleteQuiz/:quizId",verifyApiRoutes,deleteQuiz)
 
 
 export default router;

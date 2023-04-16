@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 export const verifyApiRoutes = (req, res, next) => {
  
     if (req.headers.cookie) {
+      
       const cookies = req.headers.cookie.split(";");
       let token;
       cookies.forEach((cookie) => {
@@ -26,7 +27,7 @@ export const verifyApiRoutes = (req, res, next) => {
           }
         });
       } else {
-        
+        console.log("no token");
         res.status(403).json({
           success: false,
           message: "there is an issue with your credentials!",

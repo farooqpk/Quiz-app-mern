@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import Loader from "../../components/commons/Loader";
 import { useContext } from "react";
 import { AllQuizDataContext } from "../../context/userSide/AllQuizDataContextPovider";
+import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 
 const getQuizApi = async () => {
   try {
@@ -24,16 +25,18 @@ const getQuizApi = async () => {
 
 export const GetAllQuizData = () => {
   const { AllquizData, setAllQuizData } = useContext(AllQuizDataContext);
+  const { CreateQuizFormData, setCreateQuizFormData } = useContext(
+    CreateQuizFormDataContext
+  ); 
 
   const { data, error, isError, isLoading } = useQuery(
     "getQuizDatas",
-    () => getQuizApi(),
-    {
-      retry: false,
-    }
+    () => getQuizApi()
   );
 
   if (data) {
+    //removing current quizform data from state to keep new data and also avoid bug of not updating state in CreateQuizPost component and causing duplicate data because of not updating state, but when update state here working correctly
+    setCreateQuizFormData((prev)=>null)
     setAllQuizData(data);
   }
 
