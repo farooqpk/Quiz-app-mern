@@ -11,7 +11,7 @@ import { EmailContextProvider } from "./context/adminSide/EmailContextProvider";
 import { CreateQuiz } from "./pages/admin/quiz/CreateQuiz";
 import { CreateQuizFormNextBtnContextProvider } from "./context/adminSide/CreateQuizFormNextBtnContextProvider";
 import { CreateQuizFormDataContextProvider } from "./context/adminSide/CreateQuizFormDataContextProvider";
-import { AllQuizDataContextProvider } from "./context/userSide/AllQuizDataContextPovider";
+import { AllQuizDataContextProvider } from "./context/common/AllQuizDataContextPovider";
 import { QuizPage } from "./pages/user/quiz/QuizPage";
 import { SelectedAnsContextProvider } from "./context/userSide/SelectedAnsContextProvider";
 import { QuizResult } from "./pages/user/quiz/QuizResult";

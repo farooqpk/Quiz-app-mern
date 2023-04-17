@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { AdminNav } from "../../../components/adminside/AdminNav";
 import { Footer } from "../../../components/commons/Footer";
 import { QuizCard } from "../../../components/commons/QuizCard";
-import { AllQuizDataContext } from "../../../context/userSide/AllQuizDataContextPovider";
+import { AllQuizDataContext } from "../../../context/common/AllQuizDataContextPovider";
 import { GetAllQuizData } from "../../../helpers/quizHelpers/GetAllQuizDatas";
 
 export const AdminHome = () => {

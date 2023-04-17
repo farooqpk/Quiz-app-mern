@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/commons/Loader";
 import { useContext } from "react";
-import { AllQuizDataContext } from "../../context/userSide/AllQuizDataContextPovider";
+import { AllQuizDataContext } from "../../context/common/AllQuizDataContextPovider";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 
 const getQuizApi = async () => {

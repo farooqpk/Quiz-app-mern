@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { QuizCard } from "../../../components/commons/QuizCard";
-import { AllQuizDataContext } from "../../../context/userSide/AllQuizDataContextPovider";
+import { AllQuizDataContext } from "../../../context/common/AllQuizDataContextPovider";
 import { GetAllQuizData } from "../../../helpers/quizHelpers/GetAllQuizDatas";
 import { Footer } from "../../../components/commons/Footer";
 

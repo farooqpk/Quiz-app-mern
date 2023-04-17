@@ -18,9 +18,8 @@ app.use(express.urlencoded({extended:true}))
 app.use('/',Route)
 app.use(cookieParser())
 
-
-app.listen(3000, () => {
-  mongoose.connect("mongodb://127.0.0.1:27017/QuizApp").then(() => {
-    console.log(`server started @  http://localhost:3000/`);
+app.listen(process.env.PORT, () => {
+  mongoose.connect(process.env.DB_URL).then(() => {
+    console.log(`server started`);
   });
 });

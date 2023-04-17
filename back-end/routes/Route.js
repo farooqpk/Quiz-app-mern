@@ -25,7 +25,7 @@ router.post("/verifyOtp",verifyOtp)
 
 router.put("/resetPass",verifyResetPassToken,resetPass)
 
-router.delete("/logout",verifyToken,logout)
+router.delete("/logout",verifyApiRoutes,logout)
 
 router.post("/createQuiz",verifyApiRoutes,createQuiz)
 
