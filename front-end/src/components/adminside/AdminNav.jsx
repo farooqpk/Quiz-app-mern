@@ -77,9 +77,9 @@ export const AdminNav = () => {
                 className="menu menu-compact dropdown-content mt-3 p-2 shadow  rounded-box w-fit bg-white"
               >
                 <li>
-                  <a className="bg-inherit  md:text-lg  hover:bg-gray-300 text-black">
+                  <Link to={"/profile"} className="bg-inherit  md:text-lg  hover:bg-gray-300 text-black">
                     Profile
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a

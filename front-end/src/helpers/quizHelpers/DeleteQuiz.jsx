@@ -21,7 +21,7 @@ const deleteQuizApi = async (quizId) => {
   }
 };
 
-export const DeleteQuiz = ({ quizId, handleDeleteQuiz }) => {
+export const DeleteQuiz = ({ quizId, setIsDeleteQuiz }) => {
   const queryClient = useQueryClient();
 
   const { data, error, isError, isLoading } = useQuery(
@@ -31,7 +31,7 @@ export const DeleteQuiz = ({ quizId, handleDeleteQuiz }) => {
       retry: false,
       onSuccess: () => {
         // upddate this state to correct the conditon in the QuizCard component delete button click toggle
-        handleDeleteQuiz();
+        setIsDeleteQuiz()
         //to fetch updated GetQuizData query after delete
         queryClient.fetchQuery("getQuizDatas");
       },

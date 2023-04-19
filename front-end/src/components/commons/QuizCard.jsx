@@ -1,6 +1,7 @@
 import {useState } from "react";
 import { Link } from "react-router-dom";
 import { DeleteQuiz } from "../../helpers/quizHelpers/DeleteQuiz";
+import Swal from 'sweetalert2'
 
 export const QuizCard = ({ quizData, adminSide }) => {
 
@@ -8,12 +9,24 @@ export const QuizCard = ({ quizData, adminSide }) => {
   const [isDeleteQuiz, setIsDeleteQuiz] = useState(false);
 
   const handleDeleteQuiz = () => {
-    setIsDeleteQuiz(!isDeleteQuiz);
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("", "", "success").then(() =>  setIsDeleteQuiz(!isDeleteQuiz));
+      }
+    });
+
   };
 
   return (
     <>
-      {isDeleteQuiz && <DeleteQuiz quizId={quizData._id} handleDeleteQuiz={handleDeleteQuiz} />}
+      {isDeleteQuiz && <DeleteQuiz quizId={quizData._id} setIsDeleteQuiz={setIsDeleteQuiz} />}
 
       <div className="md:w-2/4 sm:w-2/4 lg:w-1/4 w-3/4 card bg-gray-200 shadow-xl rounded-xl mx-5 flex flex-wrap my-2">
         <div className="card-body items-center text-center w-full">

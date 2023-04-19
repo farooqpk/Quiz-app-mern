@@ -16,6 +16,7 @@ import { QuizPage } from "./pages/user/quiz/QuizPage";
 import { SelectedAnsContextProvider } from "./context/userSide/SelectedAnsContextProvider";
 import { QuizResult } from "./pages/user/quiz/QuizResult";
 import { CreateQuizIsFinishedContextProvider } from "./context/adminSide/CreateQuizIsFinishedContextProvider";
+import { AdminProfile } from "./pages/admin/home/AdminProfile";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ function App() {
                         />
                         <Route path="/quizPage" element={<QuizPage />} />
                         <Route path="/quizResult" element={<QuizResult />} />
+                        <Route path="/profile" element={<VerifyTokenGet children={<AdminProfile/>}  />} />
                       </Routes>
                     </BrowserRouter>
                   </EmailContextProvider>
