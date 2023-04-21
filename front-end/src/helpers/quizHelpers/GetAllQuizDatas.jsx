@@ -45,6 +45,6 @@ export const GetAllQuizData = () => {
   }
   if (isError) {
     console.log(error);
-    return <Loader />;
+    return <Loader color={"color"} />;
   }
 };

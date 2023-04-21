@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 
 export const QuizFormBasicDetails = () => {
-  
   const { isNextClick, setIsNextClick } = useContext(
     CreateQuizFormNextBtnContext
   );
@@ -15,7 +14,7 @@ export const QuizFormBasicDetails = () => {
   );
 
   const handleNextBtn = (data) => {
-    setCreateQuizFormData({...data});
+    setCreateQuizFormData({ ...data });
     setIsNextClick(!isNextClick);
   };
 
