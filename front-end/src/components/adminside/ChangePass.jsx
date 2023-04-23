@@ -8,6 +8,12 @@ import { ChangePassPut } from "../../helpers/authHelpers/ChangePassPut";
 export const ChangePass = () => {
 
   const [changePassData,setChangePassData] = useState(null)
+  const [passNotExistError, setPassnotExistErr] = useState("");
+
+  const handlePassExistErr = (msg) => {
+    setPassnotExistErr(msg);
+    setChangePassData(null);
+  };
 
   const schema = yup.object().shape({
     currentPass: yup
@@ -36,7 +42,7 @@ export const ChangePass = () => {
 
   return (
     <>
-    {changePassData &&  <ChangePassPut passData={changePassData} />}
+    {changePassData &&  <ChangePassPut passData={changePassData} handlePassExistErr={handlePassExistErr} />}
 
 
       <form onSubmit={handleSubmit(sumbitData)} className="w-5/6 my-3 border border-dashed border-gray-400">
@@ -44,11 +50,16 @@ export const ChangePass = () => {
           Change Password?
         </h1>
         <div className="flex flex-col items-center justify-center gap-7 my-4">
+
+        {passNotExistError && (
+            <p className="text-red-600 text-center break-words">{passNotExistError}</p>
+          )}
+
           <input
           {...register("currentPass")}
             type="password"
             placeholder="enter current password"
-            className="w-5/6 input input-md input-bordered input-ghost bg-slate-100 text-md"
+            className="w-5/6 input input-md text-black input-bordered input-ghost bg-slate-100 text-md"
           />
            {errors.currentPass && (
             <p className="text-red-600">{errors.currentPass.message}</p>
@@ -57,7 +68,7 @@ export const ChangePass = () => {
           {...register("newPass")}
             type="password"
             placeholder="enter new password"
-            className="w-5/6 input input-md input-bordered input-ghost bg-slate-100 text-md"
+            className="w-5/6 input input-md input-bordered input-ghost bg-slate-100 text-md text-black"
           />
            {errors.newPass && (
             <p className="text-red-600">{errors.newPass.message}</p>

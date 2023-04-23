@@ -2,6 +2,9 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/commons/Loader";
+import { toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const changeEmailApiReq = async (emailData) => {
   try {
@@ -14,35 +17,42 @@ const changeEmailApiReq = async (emailData) => {
     );
     return response.data;
   } catch (error) {
-    if(error.response){
+    if (error.response) {
       throw new Error(error.response.data.message);
-    }else{
-      throw new Error('Check your internet connection,or please try again later')
+    } else {
+      throw new Error(
+        "Check your internet connection,or please try again later"
+      );
     }
   }
 };
 
-export const ChangeEmailPut=({emailData})=>{
-    
-    const navigate = useNavigate()
-    const { isError, isLoading, data, error } = useQuery(
-        "changeEmail",
-        () => changeEmailApiReq(emailData),
-        {
-          enabled: !!emailData,
-          retry:false
-        }
-      );
-    
-      if (isLoading) {
-        return <Loader />;
-      }
-    
-      if (isError) {
-        return <Loader/>
-      }
-    
-      data && navigate("/adminHome");
-    
+export const ChangeEmailPut = ({ emailData, handleEmailExistErr }) => {
+  
+  const navigate = useNavigate();
+  const { isError, isLoading, data, error } = useQuery(
+    "changeEmail",
+    () => changeEmailApiReq(emailData),
+    {
+      enabled: !!emailData,
+      retry: false,
+    }
+  );
 
-}
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    handleEmailExistErr(error.message);
+  }
+
+  if (data) {
+    toast.success("email updated",{
+      toastId:"success1",
+    })
+   navigate("/adminHome")
+  }
+  
+  
+};

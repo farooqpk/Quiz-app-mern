@@ -17,19 +17,21 @@ import { SelectedAnsContextProvider } from "./context/userSide/SelectedAnsContex
 import { QuizResult } from "./pages/user/quiz/QuizResult";
 import { CreateQuizIsFinishedContextProvider } from "./context/adminSide/CreateQuizIsFinishedContextProvider";
 import { AdminProfile } from "./pages/admin/home/AdminProfile";
+import { ToastContainer} from "react-toastify";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}> 
         <SelectedAnsContextProvider>
           <AllQuizDataContextProvider>
             <CreateQuizFormDataContextProvider>
               <CreateQuizIsFinishedContextProvider>
                 <CreateQuizFormNextBtnContextProvider>
                   <EmailContextProvider>
+                    <ToastContainer/>
                     <BrowserRouter>
                       <Routes>
                         <Route path="/" element={<Home />} />
@@ -47,7 +49,12 @@ function App() {
                         />
                         <Route path="/quizPage" element={<QuizPage />} />
                         <Route path="/quizResult" element={<QuizResult />} />
-                        <Route path="/profile" element={<VerifyTokenGet children={<AdminProfile/>}  />} />
+                        <Route
+                          path="/profile"
+                          element={
+                            <VerifyTokenGet children={<AdminProfile />} />
+                          }
+                        />
                       </Routes>
                     </BrowserRouter>
                   </EmailContextProvider>

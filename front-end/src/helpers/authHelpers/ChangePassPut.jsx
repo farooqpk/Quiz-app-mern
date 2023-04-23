@@ -2,13 +2,16 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/commons/Loader";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+
 
 const changePassApiReq = async (passData) => {
   try {
     const { currentPass, newPass } = passData;
 
     const response = await axios.put(
-      `${import.meta.env.VITE_SERVER_BASEURL}/changeEmail`,
+      `${import.meta.env.VITE_SERVER_BASEURL}/changePass`,
       { currentPass, newPass },
       { headers: { "Content-Type": "application/json" }, withCredentials: true }
     );
@@ -22,8 +25,9 @@ const changePassApiReq = async (passData) => {
   }
 };
 
-export const ChangePassPut=({passData})=>{
+export const ChangePassPut=({passData,handlePassExistErr})=>{
 
+    const navigate = useNavigate()
     const { isError, isLoading, data, error } = useQuery(
         "changePassword",
         () => changePassApiReq(passData),
@@ -38,9 +42,14 @@ export const ChangePassPut=({passData})=>{
       }
     
       if (isError) {
-        return <Loader/>
+        handlePassExistErr(error.message)
       }
     
-      data && navigate("/adminHome");
+      if(data){
+        toast.success("pass updated",{
+          toastId:"success1"
+        })
+        navigate("/adminHome");
+      } 
 
 }
