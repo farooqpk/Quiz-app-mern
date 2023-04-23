@@ -24,8 +24,9 @@ app.get("/test",(req,res)=>{
   res.json("server is working")
 })
 
-app.listen(process.env.PORT, () => {
-  mongoose.connect(process.env.DB_URL).then(() => {
+
+mongoose.connect(process.env.DB_URL).then(() => {
+  app.listen(process.env.PORT, () => {
     console.log(`server started`);
   });
 });
