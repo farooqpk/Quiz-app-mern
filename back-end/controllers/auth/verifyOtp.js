@@ -22,7 +22,7 @@ export const verifyOtp = async (req, res) => {
       res.cookie("ResetToken", token, {
         httpOnly: true,
         secure: true,
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 1 * 60 * 60 * 1000,
         domain: process.env.SERVER_SUBDOMAIN,
         path: '/'
