@@ -3,11 +3,20 @@ export const logout=(req,res)=>{
 
     try {
         
-        res.cookie("jwt", "", {
+        // res.cookie("jwt", "", {
+        //     httpOnly: true,
+        //     maxAge: 1,
+        //     path: '/'
+        //   })
+        res.cookie("jwt", token, {
             httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
             maxAge: 1,
+            domain: process.env.SERVER_SUBDOMAIN,
             path: '/'
           })
+          
           res.status(201).json(true);
         
     } catch (error) {

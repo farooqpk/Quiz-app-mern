@@ -11,11 +11,19 @@ export const loginPost = async (req, res) => {
         .json({ success: false, message: "Invalid email or password" });
     } else {
       const token = createToken(admin._id);
+      // res.cookie("jwt", token, {
+      //   httpOnly: true,
+      //   maxAge: 48 * 60 * 60 * 1000,
+      //   path: '/'
+      // });
       res.cookie("jwt", token, {
         httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
         maxAge: 48 * 60 * 60 * 1000,
+        domain: process.env.SERVER_SUBDOMAIN,
         path: '/'
-      });
+      })
       res.status(201).json(true);
     }
   } catch (error) {

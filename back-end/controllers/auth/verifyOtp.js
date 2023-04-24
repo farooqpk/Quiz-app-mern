@@ -14,11 +14,20 @@ export const verifyOtp = async (req, res) => {
     } else {
       await otpModel.deleteOne({ email: Otp.email });
       const token = CreateResetPassToken(Otp.id);
+      // res.cookie("ResetToken", token, {
+      //   httpOnly: true,
+      //   maxAge: 1 * 60 * 60 * 1000,
+      //   path: '/'
+      // });
       res.cookie("ResetToken", token, {
         httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
         maxAge: 1 * 60 * 60 * 1000,
+        domain: process.env.SERVER_SUBDOMAIN,
         path: '/'
-      });
+      })
+
       res.status(200).json(true);
     }
   } catch (error) {
