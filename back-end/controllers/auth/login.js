@@ -19,7 +19,7 @@ export const loginPost = async (req, res) => {
       res.cookie("jwt", token, {
         httpOnly: true,
         secure: true,
-        sameSite: 'strict',
+        sameSite:"strict",
         maxAge: 48 * 60 * 60 * 1000,
         domain: process.env.SERVER_SUBDOMAIN,
         path: '/'
