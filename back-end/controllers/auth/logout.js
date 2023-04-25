@@ -5,12 +5,18 @@ export const logout = (req, res) => {
     //     maxAge: 1,
     //     path: '/'
     //   })
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",
       maxAge: 1,
-      domain: process.env.SERVER_SUBDOMAIN,
+      domain: process.env.SUBDOMAIN,
       path: "/",
     });
 

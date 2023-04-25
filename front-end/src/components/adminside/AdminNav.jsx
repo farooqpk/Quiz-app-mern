@@ -61,7 +61,7 @@ export const AdminNav = () => {
             </div>
           </div>
           <div className="navbar-center">
-            <Link className="btn btn-ghost normal-case text-xl text-black">
+            <Link to={"/adminHome"} className="btn btn-ghost normal-case text-xl text-black">
               AdminHome
             </Link>
           </div>

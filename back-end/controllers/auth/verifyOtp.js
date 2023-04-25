@@ -2,13 +2,11 @@ import otpModel from "../../models/otpModel.js";
 import bcrypt from "bcrypt";
 import { CreateResetPassToken } from "../../middlewares/CreateResetPassToken.js";
 
-
 export const verifyOtp = async (req, res) => {
   try {
-    
     const Otp = await otpModel.findOne({ email: req.body.Email });
     const isMatch = await bcrypt.compare(req.body.otp, Otp.otp);
-   
+
     if (!isMatch) {
       res.status(401).json({ success: false, message: "otp is incorrect!" });
     } else {
@@ -19,14 +17,20 @@ export const verifyOtp = async (req, res) => {
       //   maxAge: 1 * 60 * 60 * 1000,
       //   path: '/'
       // });
+      res.header("Access-Control-Allow-Credentials", true);
+      res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+      );
       res.cookie("ResetToken", token, {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: "none",
         maxAge: 1 * 60 * 60 * 1000,
-        domain: process.env.SERVER_SUBDOMAIN,
-        path: '/'
-      })
+        domain: process.env.SUBDOMAIN,
+        path: "/",
+      });
 
       res.status(200).json(true);
     }

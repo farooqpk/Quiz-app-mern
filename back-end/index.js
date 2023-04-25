@@ -11,9 +11,10 @@ dotenv.config()
 const app = express();
 
 app.use(cors({
-  origin:true,
-  credentials:true,
+  origin:true || process.env.CLIENT_URL,
+  credentials:true
 }))
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/',Route)
@@ -30,3 +31,6 @@ mongoose.connect(process.env.DB_URL).then(() => {
     console.log(`server started`);
   });
 });
+
+
+

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AdminNav } from "../../../components/adminside/AdminNav";
 import { Footer } from "../../../components/commons/Footer";
 import { QuizCard } from "../../../components/commons/QuizCard";
@@ -6,14 +6,12 @@ import { AllQuizDataContext } from "../../../context/common/AllQuizDataContextPo
 import { GetAllQuizData } from "../../../helpers/quizHelpers/GetAllQuizDatas";
 
 export const AdminHome = () => {
-
   const { AllquizData, setAllQuizData } = useContext(AllQuizDataContext);
 
   return (
     <>
-      <GetAllQuizData />
+      <GetAllQuizData />;
       <AdminNav />
-
       <main className="mb-36">
         <div className="flex justify-center flex-wrap">
           <header className="p-4 flex my-6 justify-center">
@@ -26,9 +24,9 @@ export const AdminHome = () => {
               return (
                 <>
                   <QuizCard
+                    key={index}
                     quizData={item}
                     adminSide={"adminSide"}
-                    key={index}
                   />
                 </>
               );
@@ -36,7 +34,6 @@ export const AdminHome = () => {
           </section>
         </div>
       </main>
-      
       <Footer />
     </>
   );

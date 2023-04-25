@@ -4,6 +4,7 @@ import { QuizFormQuestions } from "../../../components/adminside/QuizFormQuestio
 import { CreateQuizFormNextBtnContext } from "../../../context/adminSide/CreateQuizFormNextBtnContextProvider";
 import { CreateQuizIsFinishedContext } from "../../../context/adminSide/CreateQuizIsFinishedContextProvider";
 import { useNavigate } from "react-router-dom";
+import { AdminHome } from "../home/AdminHome";
 
 export const CreateQuiz = () => {
   const navigate = useNavigate();

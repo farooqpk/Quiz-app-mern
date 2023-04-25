@@ -2,14 +2,13 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/commons/Loader";
 import { CreateQuizFormNextBtnContext } from "../../context/adminSide/CreateQuizFormNextBtnContextProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 import { CreateQuizIsFinishedContext } from "../../context/adminSide/CreateQuizIsFinishedContextProvider";
 import { useNavigate } from "react-router-dom";
+import { AdminHome } from "../../pages/admin/home/AdminHome";
 
 const createQuizApi = async (CreateQuizFormData) => {
-  console.log(CreateQuizFormData);
-
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_SERVER_BASEURL}/createQuiz`,
@@ -39,13 +38,15 @@ export const CreateQuizPost = () => {
   );
   const { isFinished, SetisFinished } = useContext(CreateQuizIsFinishedContext);
 
-  const { data, error, isError, isLoading} = useQuery(
+  const { data, error, isError, isLoading } = useQuery(
     "CreateQuizFormData",
     () => createQuizApi(CreateQuizFormData),
     {
       enabled: !!CreateQuizFormData,
       retry: false,
-
+      // onSuccess: () => {
+      //   // return <AdminHome />;
+      // },
     }
   );
 
@@ -61,5 +62,4 @@ export const CreateQuizPost = () => {
   if (isError) {
     navigate("/login");
   }
-
 };

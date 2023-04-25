@@ -24,8 +24,8 @@ const getQuizApi = async () => {
 };
 
 export const GetAllQuizData = () => {
-  const { AllquizData, setAllQuizData } = useContext(AllQuizDataContext);
-  const { CreateQuizFormData, setCreateQuizFormData } = useContext(
+  const {setAllQuizData } = useContext(AllQuizDataContext);
+  const {setCreateQuizFormData } = useContext(
     CreateQuizFormDataContext
   ); 
 
