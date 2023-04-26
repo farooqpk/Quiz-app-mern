@@ -18,19 +18,19 @@ export const loginPost = async (req, res) => {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
       );
-      // res.cookie("jwt", token, {
-      //   httpOnly: true,
-      //   maxAge: 48 * 60 * 60 * 1000,
-      //   path: '/'
-      // });
       res.cookie("jwt", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
         maxAge: 48 * 60 * 60 * 1000,
-        domain: process.env.SUBDOMAIN,
-        path: "/",
+        path: '/'
       });
+      // res.cookie("jwt", token, {
+      //   httpOnly: true,
+      //   secure: true,
+      //   sameSite: "none",
+      //   maxAge: 48 * 60 * 60 * 1000,
+      //   domain: process.env.SUBDOMAIN,
+      //   path: "/",
+      // });
       res.status(201).json(true);
     }
   } catch (error) {
