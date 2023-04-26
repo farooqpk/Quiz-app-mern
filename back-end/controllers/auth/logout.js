@@ -1,6 +1,5 @@
 export const logout = (req, res) => {
   try {
-    
     res.header("Access-Control-Allow-Credentials", true);
     res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
     res.header(
@@ -10,8 +9,10 @@ export const logout = (req, res) => {
     res.cookie("jwt", "", {
       httpOnly: true,
       maxAge: 1,
-      path: '/'
-    })
+      path: "/",
+      SameSite:"None",
+      Secure:true
+    });
     // res.cookie("jwt", token, {
     //   httpOnly: true,
     //   secure: true,
