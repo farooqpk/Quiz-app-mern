@@ -12,27 +12,14 @@ export const loginPost = async (req, res) => {
     } else {
       const token = createToken(admin._id);
       
-      res.header("Access-Control-Allow-Credentials", true);
-      res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-      );
       res.cookie("jwt", token, {
-        httpOnly: true,
+        httpOnly: true, // its used to secure cookie in which client side javascript cannot access that cookie only server can
         maxAge: 48 * 60 * 60 * 1000,
         path: '/',
-        SameSite:"None",
-        Secure:true
+        sameSite: process.env.PRODUCTION && "none",
+        secure: process.env.PRODUCTION && true
       });
-      // res.cookie("jwt", token, {
-      //   httpOnly: true,
-      //   secure: true,
-      //   sameSite: "none",
-      //   maxAge: 48 * 60 * 60 * 1000,
-      //   domain: process.env.SUBDOMAIN,
-      //   path: "/",
-      // });
+     
       res.status(201).json(true);
     }
   } catch (error) {

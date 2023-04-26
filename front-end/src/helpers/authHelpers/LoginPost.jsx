@@ -10,7 +10,7 @@ const loginApiReq = async (adminData) => {
     const response = await axios.post(
       `${import.meta.env.VITE_SERVER_BASEURL}/login`,
       { Email, Password },
-      { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      { headers: { "Content-Type": "application/json" }, withCredentials:true }
     );
     
     return response.data;

@@ -12,14 +12,19 @@ const app = express();
 
 app.use(cors({
   origin:process.env.CLIENT_URL,
-  credentials:true
+  credentials:true,
+  allowedHeaders:['Content-Type','Authorization','x-csrf-token'],
+  exposedHeaders:['*','Authorization']
 }))
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/',Route)
 app.use(cookieParser())
-app.use(helmet()) //helmet protect out app by setting various htttp headers
+//helmet protect out app by setting various htttp headers
+app.use(helmet({
+  crossOriginEmbedderPolicy:false
+})) 
 
 app.get("/test",(req,res)=>{
   res.json("server is working")
