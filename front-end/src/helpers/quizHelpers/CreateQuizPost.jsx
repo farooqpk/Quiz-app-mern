@@ -44,9 +44,9 @@ export const CreateQuizPost = () => {
     {
       enabled: !!CreateQuizFormData,
       retry: false,
-      // onSuccess: () => {
-      //   // return <AdminHome />;
-      // },
+      onSuccess: () => {
+        return <AdminHome/>;  //used to retrive because sometimes didnt get new data so inside this we fetching new data
+      },
     }
   );
 
