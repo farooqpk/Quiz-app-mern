@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/commons/Loader";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AllQuizDataContext } from "../../context/common/AllQuizDataContextPovider";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 
@@ -24,21 +24,24 @@ const getQuizApi = async () => {
 };
 
 export const GetAllQuizData = () => {
-  const {setAllQuizData } = useContext(AllQuizDataContext);
-  const {setCreateQuizFormData } = useContext(
-    CreateQuizFormDataContext
-  ); 
+  const { setAllQuizData } = useContext(AllQuizDataContext);
+  const { setCreateQuizFormData } = useContext(CreateQuizFormDataContext);
 
-  const { data, error, isError, isLoading } = useQuery(
-    "getQuizDatas",
-    () => getQuizApi()
+  const { data, error, isError, isLoading } = useQuery("getQuizDatas", () =>
+    getQuizApi()
   );
 
-  if (data) {
-    //removing current quizform data from state to keep new data and also avoid bug of not updating state in CreateQuizPost component and causing duplicate data because of not updating state, but when update state here working correctly
-    setCreateQuizFormData((prev)=>null)
-    setAllQuizData(data);
-  }
+  useEffect(() => {
+    if (data) {
+      setAllQuizData(() => {
+        console.log("updated");
+        return data;
+      });
+      //removing current quizform data from state to keep new data and also avoid bug of not updating state in CreateQuizPost component and causing duplicate data because of not updating state, but when update state here working correctly
+      setCreateQuizFormData((prev) => null);
+    }
+  }, [data, setAllQuizData, setCreateQuizFormData]);
+
 
   if (isLoading) {
     return <Loader color={"color"} />;

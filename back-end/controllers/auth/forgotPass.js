@@ -32,24 +32,30 @@ export const forgotPass = async (req, res) => {
         text: "your otp is:" + randomOtp,
       };
 
-      await new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, async (err, info) => {
+      new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
-            res
-              .status(401)
-              .json({ success: false, message: "Sorry,there is an error!" });
             reject(err);
           } else {
-            const hashOtp = await bcrypt.hash(randomOtp, 10);
-            const Otp = await otpModel.create({
-              otp: hashOtp,
-              email: admin.email,
-            });
-            console.log("Email sent: " + info.response);
             resolve(info);
           }
         });
-      });
+      })
+        .then(async (info) => {
+          const hashOtp = await bcrypt.hash(randomOtp, 10);
+          const Otp = await otpModel.create({
+            otp: hashOtp,
+            email: admin.email,
+          });
+          console.log("Email sent: " + info.response);
+          resolve(info);
+        })
+        .catch((err) => {
+          res
+            .status(401)
+            .json({ success: false, message: "Sorry,there is an error!" });
+          reject(err);
+        });
     } else {
       res
         .status(401)

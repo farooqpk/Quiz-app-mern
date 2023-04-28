@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/commons/Loader";
-import { CreateQuizFormNextBtnContext } from "../../context/adminSide/CreateQuizFormNextBtnContextProvider";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
-import { CreateQuizIsFinishedContext } from "../../context/adminSide/CreateQuizIsFinishedContextProvider";
+
 import { useNavigate } from "react-router-dom";
-import { AdminHome } from "../../pages/admin/home/AdminHome";
 
 const createQuizApi = async (CreateQuizFormData) => {
   try {
@@ -30,33 +28,19 @@ const createQuizApi = async (CreateQuizFormData) => {
 export const CreateQuizPost = () => {
   const navigate = useNavigate();
 
-  const { CreateQuizFormData, setCreateQuizFormData } = useContext(
-    CreateQuizFormDataContext
-  );
-  const { isNextClick, setIsNextClick } = useContext(
-    CreateQuizFormNextBtnContext
-  );
-  const { isFinished, SetisFinished } = useContext(CreateQuizIsFinishedContext);
+  const { CreateQuizFormData } = useContext(CreateQuizFormDataContext);
 
-  const { data, error, isError, isLoading } = useQuery(
+  const { isError, isLoading } = useQuery(
     "CreateQuizFormData",
     () => createQuizApi(CreateQuizFormData),
     {
       enabled: !!CreateQuizFormData,
       retry: false,
-      onSuccess: () => {
-        return <AdminHome/>;  //used to retrive because sometimes didnt get new data so inside this we fetching new data
-      },
     }
   );
 
   if (isLoading) {
     return <Loader />;
-  }
-
-  if (data) {
-    setIsNextClick(!isNextClick);
-    SetisFinished(!isFinished);
   }
 
   if (isError) {
