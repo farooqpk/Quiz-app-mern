@@ -1,21 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { QuizFormBasicDetails } from "../../../components/adminside/QuizFormBasicDetails";
 import { QuizFormQuestions } from "../../../components/adminside/QuizFormQuestions";
 import { CreateQuizFormNextBtnContext } from "../../../context/adminSide/CreateQuizFormNextBtnContextProvider";
-import { CreateQuizIsFinishedContext } from "../../../context/adminSide/CreateQuizIsFinishedContextProvider";
-import { useNavigate } from "react-router-dom";
 
 export const CreateQuiz = () => {
-
-  const navigate = useNavigate();
+  
   const { isNextClick } = useContext(CreateQuizFormNextBtnContext);
-  const { isFinished } = useContext(CreateQuizIsFinishedContext);
-
-  useEffect(() => {
-    if (isFinished === true) {
-      navigate("/adminHome");
-    }
-  }, [isFinished]);
 
   return (
     <>

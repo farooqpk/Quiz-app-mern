@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../../components/commons/Loader";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
-
 import { useNavigate } from "react-router-dom";
 
 const createQuizApi = async (CreateQuizFormData) => {
@@ -30,7 +29,7 @@ export const CreateQuizPost = () => {
 
   const { CreateQuizFormData } = useContext(CreateQuizFormDataContext);
 
-  const { isError, isLoading } = useQuery(
+  const { data, isError, isLoading } = useQuery(
     "CreateQuizFormData",
     () => createQuizApi(CreateQuizFormData),
     {
@@ -38,6 +37,12 @@ export const CreateQuizPost = () => {
       retry: false,
     }
   );
+
+  useEffect(() => {
+    if (data) {
+      navigate("/adminHome");
+    }
+  }, [data]);
 
   if (isLoading) {
     return <Loader />;
