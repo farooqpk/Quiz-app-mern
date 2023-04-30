@@ -53,12 +53,14 @@ export const QuizPage = () => {
     const result = state.Questions.reduce((acc, item) => {
 
         const selected = selectedAns.find((obj) => obj[item.No]);
-
+console.log(selected);
         const isCorrect = selected
           ? selected[item.No] === item.options[item.CorrectAns]
           : false;
           
         const isUnanswered = selected ? false : true; //if user not selected any options
+
+        console.log(isUnanswered);
 
         if (isCorrect) {
           acc.userMark += state.EachQMark;

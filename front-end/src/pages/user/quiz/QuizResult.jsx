@@ -10,7 +10,7 @@ export const QuizResult = () => {
         <div className="flex flex-col items-center gap-6 flex-wrap w-full">
           <header className="flex flex-col items-center gap-4 p-2 mt-7 w-full">
             <h1 className="text-3xl font-semibold">
-              {state.userMark === 0 ? "Sorry! Keep trying" : "Congratulations!"}
+              {state.userMark < state.outOfMark/2 ? "Sorry! Keep trying" : "Congratulations!"}
             </h1>
             <h1 className="text-2xl font-serif text-center mt-4">
               You scored {state.userMark} out of {state.outOfMark} marks

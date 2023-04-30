@@ -1,11 +1,18 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { QuizCard } from "../../../components/commons/QuizCard";
 import { AllQuizDataContext } from "../../../context/common/AllQuizDataContextPovider";
 import { GetAllQuizData } from "../../../helpers/quizHelpers/GetAllQuizDatas";
 import { Footer } from "../../../components/commons/Footer";
+import { SelectedAnsContext } from "../../../context/userSide/SelectedAnsContextProvider";
 
 export const Home = () => {
   const { AllquizData, setAllQuizData } = useContext(AllQuizDataContext);
+  const { selectedAns, setSelectedAns } = useContext(SelectedAnsContext);
+
+  useEffect(() => {
+    // remove user prev quiz answers
+    setSelectedAns([]);
+  }, []);
 
   return (
     <>
