@@ -4,6 +4,7 @@ import Loader from "../../components/commons/Loader";
 import { useContext, useEffect } from "react";
 import { CreateQuizFormDataContext } from "../../context/adminSide/CreateQuizFormDataContextProvider";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
 
 const createQuizApi = async (CreateQuizFormData) => {
   try {
@@ -25,6 +26,7 @@ const createQuizApi = async (CreateQuizFormData) => {
 };
 
 export const CreateQuizPost = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { CreateQuizFormData } = useContext(CreateQuizFormDataContext);
@@ -40,7 +42,10 @@ export const CreateQuizPost = () => {
 
   useEffect(() => {
     if (data) {
-      navigate("/adminHome");
+      //stale 0 is used to fetch latest data instead of cache
+      queryClient.refetchQueries("getQuizDatas",{stale:0}).then(() => {
+        navigate("/adminHome");
+      });
     }
   }, [data]);
 
